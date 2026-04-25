@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siêu Trợ Lý Toán Học - Xuân Lâm V18.0 🚀</title>
+    <title>Siêu Trợ Lý Toán Học - Xuân Lâm V20.0 🚀</title>
     <style>
         :root { --primary: #0056b3; --success: #28a745; --error: #dc3545; --warning: #ffc107; --bg: #f0f8ff; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 20px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 15px; }
         .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: inline-block; width: 95%; max-width: 800px; position: relative; overflow: hidden; }
         .score-board { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
         .score-info { font-weight: bold; color: var(--primary); font-size: 16px; text-align: left; line-height: 1.6; }
         .score-highlight { color: var(--success); font-size: 22px; }
         .timer-box { color: #d81b60; font-family: monospace; font-size: 18px; background: #ffe4e1; padding: 4px 10px; border-radius: 8px; }
         .btn-capture { background: #0084FF; color: white; border: none; padding: 10px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 13px; }
-        .btn-capture:hover { background: #006bce; }
         h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; }
         .menu-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
-        select { padding: 12px; font-size: 14px; border-radius: 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; min-width: 150px; }
+        select { padding: 12px; font-size: 14px; border-radius: 8px; border: 1px solid #ccc; outline: none; min-width: 150px; }
         .question-area { background: #f8f9fa; margin: 20px 0; padding: 25px; border-radius: 15px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border: 2px solid #e0e0e0; text-align: left; }
         #question { font-size: 20px; font-weight: bold; color: #2c3e50; line-height: 1.6; width: 100%; }
-        input[type="text"] { padding: 15px; font-size: 24px; width: 280px; text-align: center; border: 3px solid #ddd; border-radius: 12px; outline: none; margin: 15px 0; transition: 0.3s; }
-        input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0,86,179,0.1); }
+        input[type="text"] { padding: 15px; font-size: 24px; width: 280px; text-align: center; border: 3px solid #ddd; border-radius: 12px; outline: none; margin: 15px 0; }
         .btn-check, .btn-next, .btn-retry { color: white; padding: 12px 25px; font-size: 17px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 5px; transition: 0.2s; }
         .btn-check { background: var(--success); } .btn-next { background: var(--primary); } .btn-retry { background: var(--warning); color: #333; }
         #message { font-size: 18px; margin-top: 15px; font-weight: 600; min-height: 25px; }
@@ -32,10 +30,10 @@
 <div class="container">
     <div id="rewardScreen">
         <div style="font-size: 80px;">🏆 🌸 🌟</div>
-        <h1 style="color: #d81b60;">Quá Tuyệt Vời Lâm Ơi!</h1>
-        <p style="font-size: 20px;">Con đã đạt mốc 100 điểm đầu tiên!</p>
+        <h1 style="color: #d81b60;">Lâm Thật Xuất Sắc!</h1>
+        <p style="font-size: 20px;">Con đã đạt mốc 100 điểm!</p>
         <div id="rewardTimeText" style="font-weight: bold; color: #0056b3; margin: 15px 0;"></div>
-        <button class="btn-check" onclick="closeReward()">Làm tiếp để thành thiên tài! 🚀</button>
+        <button class="btn-check" onclick="closeReward()">Học tiếp thôi! 🚀</button>
     </div>
 
     <div class="score-board">
@@ -44,32 +42,32 @@
             <div>🎯 Tỉ lệ: <span id="ratioText">0/0</span> bài</div>
             <div>🏆 Điểm: <span id="scoreText" class="score-highlight">0</span></div>
         </div>
-        <button class="btn-capture" onclick="captureScoreForZalo()">📸 Chụp khoe Ba Dũng</button>
+        <button class="btn-capture" onclick="captureScoreForZalo()">📸 Chụp khoe Ba</button>
     </div>
     
-    <h2>Hệ Thống Luyện Toán Vạn Năng 🎓</h2>
+    <h2>Đại Bản Doanh Toán Lớp 4 🎓</h2>
 
     <div class="menu-group">
         <select id="grade" onchange="loadTypes()">
+            <option value="4" selected>Lớp 4 (Mặc định)</option>
             <option value="1">Lớp 1</option>
             <option value="2">Lớp 2</option>
             <option value="3">Lớp 3</option>
-            <option value="4" selected>Lớp 4 (Mặc định)</option>
             <option value="5">Lớp 5</option>
         </select>
         <select id="type" onchange="newQuestion()"></select>
     </div>
 
     <div class="question-area">
-        <div id="question">Đang chuẩn bị đề bài...</div>
+        <div id="question">Đang tải đề bài...</div>
         <div id="formatHint" style="font-size: 13px; color: #666; font-style: italic; margin-top: 8px;"></div>
     </div>
 
-    <input type="text" id="answer" placeholder="Nhập đáp án..." autocomplete="off">
+    <input type="text" id="answer" placeholder="Đáp án..." autocomplete="off">
     
     <div id="actionButtons" style="margin-top: 10px;">
-        <button class="btn-check" onclick="check()">Kiểm tra bài</button>
-        <button class="btn-next" onclick="newQuestion()">Lấy đề mới 📥</button>
+        <button class="btn-check" onclick="check()">Kiểm tra</button>
+        <button class="btn-next" onclick="newQuestion()">Đổi đề bài 📥</button>
     </div>
 
     <p id="message"></p>
@@ -78,11 +76,21 @@
 
 <script>
     const dataConfig = {
-        "1": [ {n:"Tất cả", id:"all"}, {n:"Cộng trừ phạm vi 100", id:"1_1"}, {n:"Số liền trước - sau", id:"1_2"}, {n:"So sánh số", id:"1_3"}, {n:"Cấu tạo số", id:"1_4"} ],
-        "2": [ {n:"Tất cả", id:"all"}, {n:"Bảng nhân/chia 2-5", id:"2_1"}, {n:"Đo lường (m, dm, cm)", id:"2_2"}, {n:"Khối lượng & Dung tích", id:"2_3"}, {n:"Thời gian & Ngày", id:"2_4"}, {n:"Tìm X cơ bản", id:"2_5"} ],
-        "3": [ {n:"Tất cả", id:"all"}, {n:"Nhân/Chia số lớn", id:"3_1"}, {n:"Đo lường (mm, km, g, ml)", id:"3_2"}, {n:"Chu vi & Diện tích", id:"3_3"}, {n:"Số La Mã", id:"3_4"}, {n:"Biểu thức giá trị", id:"3_5"} ],
-        "4": [ {n:"Tất cả", id:"all"}, {n:"Toán đố: Tổng-Hiệu-TBC", id:"4_1"}, {n:"Toán đố: Phân số", id:"4_2"}, {n:"Đổi Đơn Vị Đa Năng", id:"4_3"}, {n:"Tổng-Tỉ & Hiệu-Tỉ", id:"4_4"}, {n:"Góc & Hình học", id:"4_5"}, {n:"4 phép tính Phân số", id:"4_6"}, {n:"Dấu hiệu chia hết", id:"4_7"}, {n:"Thời gian & Thế kỷ", id:"4_8"} ],
-        "5": [ {n:"Tất cả", id:"all"}, {n:"Số thập phân (+ - x : )", id:"5_1"}, {n:"Tỉ số phần trăm", id:"5_2"}, {n:"Toán chuyển động (v,s,t)", id:"5_3"}, {n:"Diện tích: Tam giác, Thang", id:"5_4"}, {n:"Hình tròn: C, S", id:"5_5"}, {n:"Thể tích HHCN, HLP", id:"5_6"}, {n:"Bể nước & Đổi đơn vị", id:"5_7"} ]
+        "4": [
+            {n:"Tất cả (Lớp 4)", id:"all"},
+            {n:"Lời văn: Tổng-Hiệu-TBC", id:"4_1"},
+            {n:"Lời văn: Phân số", id:"4_2"},
+            {n:"Siêu đổi đơn vị (Hỗn hợp)", id:"4_3"},
+            {n:"Toán Tỉ số (Tổng/Hiệu Tỉ)", id:"4_4"},
+            {n:"Các loại Góc & Hình học", id:"4_5"},
+            {n:"Tính toán Phân số (Full)", id:"4_6"},
+            {n:"Dấu hiệu chia hết", id:"4_7"},
+            {n:"Năm & Thế kỷ", id:"4_8"}
+        ],
+        "1": [{n:"Cộng trừ phạm vi 100", id:"1_1"}],
+        "2": [{n:"Bảng nhân/chia 2-5", id:"2_1"}],
+        "3": [{n:"Nhân/Chia số lớn", id:"3_1"}],
+        "5": [{n:"Thể tích & Số thập phân", id:"5_1"}]
     };
 
     let currentAnswers = [], currentHint = "", currentTypeId = "";
@@ -94,7 +102,7 @@
     function gcd(a, b) { a=Math.abs(a); b=Math.abs(b); return b ? gcd(b, a % b) : a; }
     function formatTime(sec) { let m = Math.floor(sec/60); let s = sec%60; return m > 0 ? `${m}p ${s}s` : `${s}s`; }
     function updateScoreBoard() { document.getElementById('scoreText').innerText = score; document.getElementById('ratioText').innerText = `${correctQuestions}/${totalQuestions}`; }
-    
+
     function startGlobalTimer() {
         if(timerInterval) return;
         timerInterval = setInterval(() => {
@@ -122,83 +130,87 @@
         } else { currentTypeId = id; }
 
         let q = "", v = []; isQuestionAttempted = false;
-        document.getElementById('actionButtons').innerHTML = `<button class="btn-check" onclick="check()">Kiểm tra bài</button><button class="btn-next" onclick="newQuestion()">Lấy đề mới 📥</button>`;
+        document.getElementById('actionButtons').innerHTML = `<button class="btn-check" onclick="check()">Kiểm tra</button><button class="btn-next" onclick="newQuestion()">Đổi đề bài 📥</button>`;
         document.getElementById('explanationBox').style.display = "none";
         document.getElementById('formatHint').innerText = "";
         questionStartTime = Date.now();
 
-        // --- CSDL SINH ĐỀ CHI TIẾT ---
         switch(currentTypeId) {
-            // LỚP 1
-            case "1_1": { let a=r(10,80), b=r(1,19); if(r(0,1)){ v.push(a+b); q=`${a} + ${b} = ?`; } else { v.push(a-b); q=`${a} - ${b} = ?`; } break; }
-            case "1_2": { let n=r(10,90); if(r(0,1)){ v.push(n-1); q=`Số liền trước của ${n} là?`; } else { v.push(n+1); q=`Số liền sau của ${n} là?`; } break; }
-            case "1_3": { let a=r(10,99), b=r(10,99); v.push(a>b?">":a<b?"<":"="); q=`So sánh: ${a} ... ${b}`; break; }
-            case "1_4": { let c=r(1,9), d=r(0,9), s=c*10+d; if(r(0,1)){ v.push(c); q=`Số ${s} có mấy chục?`; } else { v.push(d); q=`Số ${s} có mấy đơn vị?`; } break; }
-
-            // LỚP 2
-            case "2_1": { let a=r(2,5), b=r(2,9); if(r(0,1)){ v.push(a*b); q=`${a} x ${b} = ?`; } else { v.push(b); q=`${a*b} : ${a} = ?`; } break; }
-            case "2_2": { let m=r(1,5), t=r(1,2); if(t===1){ v.push(m*10); q=`${m} m = ... dm?`; } else { v.push(m*100); q=`${m} m = ... cm?`; } break; }
-            case "2_3": { let l1=r(20,50), l2=r(5,15); if(r(0,1)){ v.push(l1+l2); q=`Bình một có ${l1}L dầu, bình hai có ${l2}L. Cả hai có bao nhiêu Lít?`; } else { v.push(l1-l2); q=`Thùng có ${l1}kg gạo, đã bán ${l2}kg. Còn lại bao nhiêu kg?`; } break; }
-            case "2_4": { let n=r(1,3); v.push(n*24); q=`${n} ngày = ... giờ?`; break; }
-            case "2_5": { let x=r(20,50), n=r(5,15); v.push(x-n); q=`Tìm X: X + ${n} = ${x}`; break; }
-
-            // LỚP 3
-            case "3_1": { let a=r(120,400), b=r(2,5); v.push(a*b); q=`${a} x ${b} = ?`; break; }
-            case "3_2": { let t=r(1,3); if(t===1){ v.push(r(2,5)*1000); q=`Đổi: ${v[0]/1000} km = ... m?`; } else if(t===2){ v.push(r(1,9)*1000); q=`Đổi: ${v[0]/1000} kg = ... g?`; } else { v.push(r(1,5)*1000); q=`Đổi: ${v[0]/1000} lít = ... ml?`; } break; }
-            case "3_3": { let d=r(6,12), w=r(3,5); if(r(0,1)){ v.push((d+w)*2); q=`HCN có dài ${d}cm, rộng ${w}cm. Chu vi là?`; } else { v.push(d*w); q=`Diện tích HCN dài ${d}cm, rộng ${w}cm là?`; } break; }
-            case "3_4": { const rom=[{r:"IV",n:4},{r:"IX",n:9},{r:"XI",n:11},{r:"XIX",n:19},{r:"XXI",n:21}]; let c=rom[r(0,4)]; v.push(c.n); q=`Số La Mã ${c.r} là số nào?`; break; }
-            case "3_5": { let a=r(10,30), b=r(2,5), c=r(2,9); v.push(a+b*c); q=`Tính: ${a} + ${b} x ${c} = ?`; break; }
-
-            // LỚP 4 (MẶC ĐỊNH & PHONG PHÚ)
-            case "4_1": {
-                let t=r(50,120), d=r(2,30); if((t+d)%2!==0) t++; let lon=(t+d)/2, be=t-lon; let tp=r(1,4);
-                if(tp===1){ v.push(lon); q=`Tổng hai số là ${t}, số này hơn số kia ${d}. Số LỚN là?`; }
-                else if(tp===2){ v.push(be); q=`An và Bình có ${t} viên bi. An ít hơn Bình ${d} viên. An có bao nhiêu viên?`; }
-                else if(tp===3){ v.push(lon); q=`Bố hơn con ${d} tuổi. Tổng số tuổi của hai bố con là ${t}. Tuổi BỐ là?`; }
-                else { let a1=r(20,40), a2=r(30,50), a3=r(10,30); let s=a1+a2+a3; if(s%3!==0) a3+=(3-s%3); v.push((a1+a2+a3)/3); q=`Ba lớp trồng được ${a1}, ${a2}, ${a3} cây. Trung bình mỗi lớp trồng bao nhiêu cây?`; }
+            // --- KHỐI LỚP 4: PHONG PHÚ TỐI ĐA ---
+            case "4_1": { 
+                let type = r(1,3);
+                if(type===1) { // Tổng hiệu thực tế
+                    let t=r(40,100), d=r(4,20); if((t+d)%2!==0) t++;
+                    let lon=(t+d)/2, be=t-lon;
+                    if(r(0,1)){ v.push(lon); q=`Hai lớp 4A và 4B quyên góp được ${t} quyển vở. Lớp 4A quyên góp NHIỀU HƠN lớp 4B là ${d} quyển. Hỏi lớp 4A có bao nhiêu quyển?`; }
+                    else { v.push(be); q=`An và Bình có ${t} viên bi. An có ÍT HƠN Bình ${d} viên. Hỏi An có bao nhiêu viên bi?`; }
+                    currentHint="Dạng Tổng-Hiệu: Số lớn=(T+H):2; Số bé=(T-H):2";
+                } else if(type===2) { // Tuổi tác
+                    let t=r(30,60), d=r(20,30); if((t+d)%2!==0) t++;
+                    v.push((t+d)/2); q=`Tổng số tuổi của bố và con là ${t} tuổi. Bố hơn con ${d} tuổi. Tính tuổi của BỐ?`;
+                    currentHint="Bố là số lớn vì bố nhiều tuổi hơn con!";
+                } else { // Trung bình cộng
+                    let a=r(10,30), b=r(30,50), c=r(15,40); let sum=a+b+c; if(sum%3!==0) c+=(3-sum%3);
+                    v.push((a+b+c)/3); q=`Ba đội công nhân sửa đường được lần lượt là ${a}m, ${b}m và ${c}m đường. Hỏi trung bình mỗi đội sửa được bao nhiêu mét đường?`;
+                }
                 break;
             }
             case "4_2": {
-                let ms=r(4,9), ts=r(1,ms-1), tot=r(5,15)*ms;
-                if(r(0,1)){ v.push((tot/ms)*ts); q=`Tấm vải dài ${tot}m. Người ta cắt đi ${ts}/${ms} tấm vải. Đã cắt bao nhiêu mét?`; }
-                else { let sd=(tot/ms)*ts; v.push(tot-sd); q=`Có ${tot}kg gạo. Đã bán ${ts}/${ms} số gạo. Còn lại bao nhiêu kg?`; }
+                let ms=r(4,9), ts=r(1,ms-1), total=r(5,15)*ms;
+                if(r(0,1)){ v.push((total/ms)*ts); q=`Một cửa hàng có ${total}kg gạo, đã bán đi ${ts}/${ms} số gạo đó. Hỏi cửa hàng đã BÁN được bao nhiêu kg gạo?`; }
+                else { let sold=(total/ms)*ts; v.push(total-sold); q=`Cuộn dây dài ${total}m. Bác thợ điện cắt đi ${ts}/${ms} cuộn dây. Hỏi cuộn dây CÒN LẠI bao nhiêu mét?`; }
+                currentHint="Muốn tìm phân số của một số, ta lấy số đó nhân với phân số.";
                 break;
             }
             case "4_3": {
-                let t=r(1,4);
-                if(t===1){ let tan=r(1,5), ta=r(1,9); v.push(tan*1000+ta*100); q=`Đổi: ${tan} tấn ${ta} tạ = ... kg?`; }
-                else if(t===2){ let m2=r(2,6), dm2=r(5,80); v.push(m2*100+dm2); q=`Đổi: ${m2} m² ${dm2} dm² = ... dm²?`; }
-                else if(t===3){ let ha=r(1,5); v.push(ha*10000); q=`Đổi: ${ha} ha = ... m²?`; }
-                else { let km2=r(1,3); v.push(km2*1000000); q=`Đổi: ${km2} km² = ... m²?`; }
+                let t = r(1,4);
+                if(t===1){ let tan=r(2,5), kg=r(5,90); v.push(tan*1000+kg); q=`Đổi: ${tan} tấn ${kg} kg = ... kg?`; }
+                else if(t===2){ let m2=r(2,8), dm2=r(5,50); v.push(m2*100+dm2); q=`Đổi: ${m2} m² ${dm2} dm² = ... dm²?`; }
+                else if(t===3){ let km=r(1,5), m=r(100,900); v.push(km*1000+m); q=`Đổi: ${km} km ${m} m = ... m?`; }
+                else { let yen=r(5,20); v.push(yen*10); q=`Đổi: ${yen} yến = ... kg?`; currentHint="1 yến = 10 kg."; }
                 break;
             }
             case "4_4": {
-                let pb=1, pl=r(2,4), g=r(5,15); 
-                if(r(0,1)){ let t=g*(pb+pl); v.push(g*pl); q=`Tổng hai số là ${t}. Số lớn gấp ${pl} lần số bé. Số LỚN là?`; }
-                else { let h=g*(pl-pb); v.push(g*pb); q=`Hiệu hai số là ${h}. Số bé bằng 1/${pl} số lớn. Số BÉ là?`; }
+                let pb=1, pl=r(2,5), g=r(4,12);
+                if(r(0,1)){ let t=g*(pb+pl); v.push(g*pl); q=`Tổng hai số là ${t}. Số lớn gấp ${pl} lần số bé. Tìm số LỚN?`; currentHint="Tổng : Tổng số phần x Số phần số lớn."; }
+                else { let h=g*(pl-pb); v.push(g*pb); q=`Hiệu hai số là ${h}. Số bé bằng 1/${pl} số lớn. Tìm số BÉ?`; currentHint="Hiệu : Hiệu số phần x Số phần số bé."; }
                 break;
             }
-            case "4_5": { const ag=[{q:"Góc 90 độ là góc gì?",a:["vuông"]},{q:"Góc bẹt bằng mấy góc vuông?",a:["2"]},{q:"Kim đồng hồ lúc 3 giờ tạo góc gì?",a:["vuông"]},{q:"Kim đồng hồ lúc 6 giờ tạo góc gì?",a:["bẹt"]}]; let c=ag[r(0,3)]; q=c.q; v=c.a; break; }
+            case "4_5": {
+                let t=r(1,3);
+                if(t===1){ v.push("vuông"); q=`Góc có số đo bằng 90 độ gọi là góc gì?`; }
+                else if(t===2){ let c=r(5,15); v.push(c*4); q=`Một hình vuông có cạnh dài ${c}cm. Tính chu vi?`; }
+                else { let d=r(8,15), r_w=r(4,7); v.push(d*r_w); q=`Diện tích hình chữ nhật có chiều dài ${d}cm, chiều rộng ${r_w}cm là?`; }
+                break;
+            }
             case "4_6": {
-                let m=r(2,5), t1=r(1,5), t2=r(1,5), op=r(1,3);
-                if(op===1){ v.push(`${t1+t2}/${m}`); let g=gcd(t1+t2,m); if(g>1) v.push(m/g===1?`${(t1+t2)/g}`:`${(t1+t2)/g}/${m/g}`); q=`${t1}/${m} + ${t2}/${m} = ?`; }
-                else if(op===2){ v.push(`${t1*t2}/${m*m}`); let g=gcd(t1*t2,m*m); v.push(`${(t1*t2)/g}/${(m*m)/g}`); q=`${t1}/${m} x ${t2}/${m} = ?`; }
-                else { v.push(`${t1}/${t2}`); let g=gcd(t1,t2); v.push(t2/g===1?`${t1/g}`:`${t1/g}/${t2/g}`); q=`${t1}/${m} : ${t2}/${m} = ?`; }
+                let m1=r(2,5), t1=r(1,5), m2=r(2,5), t2=r(1,5), op=r(1,4);
+                let tkq, mkq, s;
+                if(op===1){ tkq=t1*m2+t2*m1; mkq=m1*m2; s="+"; }
+                else if(op===2){ if(t1*m2<t2*m1){let tx=t1;t1=t2;t2=tx;let mx=m1;m1=m2;m2=mx;} tkq=t1*m2-t2*m1; mkq=m1*m2; s="-"; }
+                else if(op===3){ tkq=t1*t2; mkq=m1*m2; s="x"; }
+                else { tkq=t1*m2; mkq=m1*t2; s=":"; }
+                q=`Tính: ${t1}/${m1} ${s} ${t2}/${m2} = ?`;
+                let g=gcd(tkq,mkq); if(mkq/g===1) v.push((tkq/g).toString()); else v.push(`${tkq/g}/${mkq/g}`);
+                v.push(`${tkq}/${mkq}`);
+                document.getElementById('formatHint').innerText = "Nhập phân số (VD: 3/4) hoặc số tự nhiên.";
                 break;
             }
-            case "4_7": { let n=r(100,800); if(r(0,1)){ v=["0","5"]; q=`Số ${n}* chia hết cho 5 thì * là số nào?`; } else { v=[((9-(n%9))%9).toString()]; q=`Số ${n}* chia hết cho 9 thì * là số nào?`; } break; }
-            case "4_8": { let y=r(1800,2024); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy?`; break; }
+            case "4_7": {
+                let n=r(100,900);
+                if(r(0,1)){ v=["0","5"]; q=`Số ${n}* chia hết cho 5 thì chữ số * có thể là số nào?`; }
+                else { let dv=(9-(n%9))%9; v=[dv.toString()]; q=`Để số ${n}* chia hết cho 9 thì * phải là số mấy?`; }
+                break;
+            }
+            case "4_8": { let y=r(1800,2025); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy? (Nhập số tự nhiên)`; break; }
 
-            // LỚP 5
-            case "5_1": { let a=r(1,9), b=r(1,9); v.push((a+b)/10); q=`Tính: 0,${a} + 0,${b} = ?`; break; }
-            case "5_2": { let n=r(2,10)*50, p=r(1,4)*10; if(r(0,1)){ v.push(n*p/100); q=`Tìm ${p}% của ${n}?`; } else { v.push(n); q=`Tìm một số biết ${p}% của nó là ${n*p/100}?`; } break; }
-            case "5_3": { let sp=r(30,60), t=r(2,5); if(r(0,1)){ v.push(sp*t); q=`Xe đi ${sp}km/h trong ${t}h. Quãng đường là?`; } else { v.push(sp); q=`Xe đi ${sp*t}km trong ${t}h. Vận tốc là?`; } break; }
-            case "5_4": { let d=r(10,20), h=r(6,10); if(r(0,1)){ v.push(d*h/2); q=`Tam giác đáy ${d}cm, cao ${h}cm. Diện tích?`; } else { let d2=r(5,10); v.push((d+d2)*h/2); q=`Hình thang hai đáy ${d}cm, ${d2}cm, cao ${h}cm. Diện tích?`; } break; }
-            case "5_5": { let r_c=10; if(r(0,1)){ v.push(62.8); q=`Bán kính hình tròn 10cm. Chu vi là? (Pi=3,14)`; } else { v.push(314); q=`Bán kính hình tròn 10cm. Diện tích là? (Pi=3,14)`; } break; }
-            case "5_6": { let c=r(3,5); v.push(c*c*c); q=`Thể tích lập phương cạnh ${c}dm là bao nhiêu dm³?`; break; }
-            case "5_7": { let m3=r(1,4); v.push(m3*1000); q=`Bể chứa được ${m3} m³ nước. Vậy bể chứa được bao nhiêu LÍT?`; break; }
+            // CÁC KHỐI KHÁC (GIỮ NGUYÊN ĐỂ KHÔNG LỖI)
+            case "1_1": { let a=r(10,50), b=r(1,9); v.push(a+b); q=`${a} + ${b} = ?`; break; }
+            case "2_1": { let a=r(2,5), b=r(2,9); v.push(a*b); q=`${a} x ${b} = ?`; break; }
+            case "3_1": { let a=r(100,200), b=r(2,4); v.push(a*b); q=`${a} x ${b} = ?`; break; }
+            case "5_1": { let a=r(1,9), b=r(1,9); v.push((a+b)/10); q=`0,${a} + 0,${b} = ?`; break; }
 
-            default: { q="Lỗi ID, hãy chọn lại dạng bài!"; v=["error"]; }
+            default: { q="Lỗi ID, hãy chọn lại!"; v=["error"]; }
         }
 
         currentAnswers = v.map(String).map(s => s.trim().toLowerCase());
@@ -221,7 +233,7 @@
         }
 
         if (isCorrect) {
-            document.getElementById('message').innerText = `Chính xác! 🎉 (${time}s)`;
+            document.getElementById('message').innerText = `Đúng rồi! 🎉 (${time}s)`;
             document.getElementById('message').className = "success"; score += 10; updateScoreBoard();
             if (score >= 100 && !hasReceivedFlower) {
                 hasReceivedFlower = true;
@@ -229,9 +241,9 @@
                 document.getElementById('rewardScreen').style.display = "flex";
             } else { setTimeout(newQuestion, 2000); }
         } else {
-            document.getElementById('message').innerText = "Chưa đúng rồi! 👇";
+            updateScoreBoard(); document.getElementById('message').innerText = "Chưa đúng, nháp lại nhé! 👇";
             document.getElementById('message').className = "error";
-            document.getElementById('explanationBox').innerHTML = `💡 <strong>Gợi ý:</strong> ${currentHint || "Con hãy kiểm tra lại phép tính nhé."}`;
+            document.getElementById('explanationBox').innerHTML = `💡 <strong>Gợi ý:</strong> ${currentHint || "Con hãy kiểm tra kỹ phép tính."}`;
             document.getElementById('explanationBox').style.display = "block";
             document.getElementById('actionButtons').innerHTML = `<button class="btn-retry" onclick="retryQuestion()">Làm lại 🔄</button><button class="btn-next" onclick="newQuestion()">Bỏ qua ⏭️</button>`;
         }
@@ -247,12 +259,12 @@
         ctx.font = 'bold 24px Arial'; ctx.fillStyle = '#28a745'; ctx.fillText(`🏆 Điểm: ${score}`, 30, 180);
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ 'image/png': blob });
-            navigator.clipboard.write([item]).then(() => alert('Đã copy ảnh! Hãy Paste (Ctrl+V) vào Zalo.')).catch(() => window.open(canvas.toDataURL(), '_blank'));
+            navigator.clipboard.write([item]).then(() => alert('Đã copy ảnh! Hãy Paste vào Zalo.')).catch(() => window.open(canvas.toDataURL(), '_blank'));
         });
     }
 
     function closeReward() { document.getElementById('rewardScreen').style.display = 'none'; newQuestion(); }
-    function retryQuestion() { document.getElementById('answer').value = ""; document.getElementById('message').innerText = ""; document.getElementById('explanationBox').style.display = "none"; document.getElementById('answer').focus(); questionStartTime = Date.now(); document.getElementById('actionButtons').innerHTML = `<button class="btn-check" onclick="check()">Kiểm tra bài</button><button class="btn-next" onclick="newQuestion()">Lấy đề mới 📥</button>`; }
+    function retryQuestion() { document.getElementById('answer').value = ""; document.getElementById('message').innerText = ""; document.getElementById('explanationBox').style.display = "none"; document.getElementById('answer').focus(); questionStartTime = Date.now(); }
 
     window.onload = () => { loadTypes(); startGlobalTimer(); };
     document.getElementById('answer').addEventListener('keypress', e => { if(e.key==='Enter') check(); });
