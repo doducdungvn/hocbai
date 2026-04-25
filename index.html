@@ -3,71 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siêu Trợ Lý Toán Học - Xuân Lâm V20.0 🚀</title>
+    <title>Siêu Trợ Lý Toán Học - Xuân Lâm V26.0 🚀</title>
     <style>
-        :root { --primary: #0056b3; --success: #28a745; --error: #dc3545; --warning: #ffc107; --bg: #f0f8ff; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 15px; }
-        .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: inline-block; width: 95%; max-width: 800px; position: relative; overflow: hidden; }
+        :root { --primary: #0056b3; --success: #28a745; --error: #dc3545; --warning: #ffc107; --bg: #f4f7f9; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 15px; }
+        .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: inline-block; width: 95%; max-width: 850px; position: relative; overflow: hidden; border: 1px solid #e0e0e0; }
         .score-board { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-        .score-info { font-weight: bold; color: var(--primary); font-size: 16px; text-align: left; line-height: 1.6; }
-        .score-highlight { color: var(--success); font-size: 22px; }
-        .timer-box { color: #d81b60; font-family: monospace; font-size: 18px; background: #ffe4e1; padding: 4px 10px; border-radius: 8px; }
-        .btn-capture { background: #0084FF; color: white; border: none; padding: 10px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 13px; }
-        h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; }
-        .menu-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; justify-content: center; }
-        select { padding: 12px; font-size: 14px; border-radius: 8px; border: 1px solid #ccc; outline: none; min-width: 150px; }
-        .question-area { background: #f8f9fa; margin: 20px 0; padding: 25px; border-radius: 15px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border: 2px solid #e0e0e0; text-align: left; }
-        #question { font-size: 20px; font-weight: bold; color: #2c3e50; line-height: 1.6; width: 100%; }
-        input[type="text"] { padding: 15px; font-size: 24px; width: 280px; text-align: center; border: 3px solid #ddd; border-radius: 12px; outline: none; margin: 15px 0; }
-        .btn-check, .btn-next, .btn-retry { color: white; padding: 12px 25px; font-size: 17px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 5px; transition: 0.2s; }
+        .score-info { font-weight: bold; color: var(--primary); font-size: 16px; text-align: left; line-height: 1.7; }
+        .score-highlight { color: var(--success); font-size: 24px; }
+        .timer-box { color: #d81b60; font-family: 'Courier New', Courier, monospace; font-size: 19px; background: #ffe4e1; padding: 5px 12px; border-radius: 8px; display: inline-block; margin-bottom: 5px; }
+        .btn-capture { background: #0084FF; color: white; border: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
+        .btn-capture:hover { background: #006bce; transform: translateY(-2px); }
+        h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .menu-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
+        select { padding: 12px; font-size: 15px; border-radius: 10px; border: 2px solid #ddd; outline: none; min-width: 200px; background: #fff; cursor: pointer; font-weight: 500; }
+        .question-area { background: #fff; margin: 20px 0; padding: 30px; border-radius: 15px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border: 2px solid #0056b3; text-align: left; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
+        #question { font-size: 23px; font-weight: bold; color: #2c3e50; line-height: 1.6; width: 100%; }
+        #formatHint { font-size: 14px; color: #7f8c8d; font-style: italic; margin-top: 10px; }
+        input[type="text"] { padding: 15px; font-size: 28px; width: 320px; text-align: center; border: 3px solid #ddd; border-radius: 15px; outline: none; margin: 15px 0; transition: 0.3s; color: #0056b3; font-weight: bold; }
+        input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,86,179,0.2); }
+        .btn-check, .btn-next, .btn-retry { color: white; padding: 15px 35px; font-size: 18px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin: 5px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-check { background: var(--success); } .btn-next { background: var(--primary); } .btn-retry { background: var(--warning); color: #333; }
-        #message { font-size: 18px; margin-top: 15px; font-weight: 600; min-height: 25px; }
-        .explanation-box { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; padding: 15px; border-radius: 10px; margin-top: 15px; text-align: left; font-size: 15px; display: none; line-height: 1.5; }
-        #rewardScreen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); z-index: 100; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .btn-check:hover, .btn-next:hover { opacity: 0.9; transform: scale(1.02); }
+        #message { font-size: 20px; margin-top: 15px; font-weight: 700; min-height: 30px; }
+        .explanation-box { background: #fff3cd; color: #856404; border-left: 6px solid #ffc107; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; font-size: 16px; display: none; line-height: 1.6; }
+        #rewardScreen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.99); z-index: 100; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .success { color: var(--success); } .error { color: var(--error); }
     </style>
 </head>
 <body>
 <div class="container">
     <div id="rewardScreen">
-        <div style="font-size: 80px;">🏆 🌸 🌟</div>
-        <h1 style="color: #d81b60;">Lâm Thật Xuất Sắc!</h1>
-        <p style="font-size: 20px;">Con đã đạt mốc 100 điểm!</p>
-        <div id="rewardTimeText" style="font-weight: bold; color: #0056b3; margin: 15px 0;"></div>
-        <button class="btn-check" onclick="closeReward()">Học tiếp thôi! 🚀</button>
+        <div style="font-size: 100px;">🎈 🏆 🎈</div>
+        <h1 style="color: #d81b60; font-size: 45px;">XUÂN LÂM VÔ ĐỊCH!</h1>
+        <p style="font-size: 24px;">Con đã vượt mốc 100 điểm xuất sắc!</p>
+        <div id="rewardTimeText" style="font-weight: bold; color: #0056b3; font-size: 22px; margin: 20px 0;"></div>
+        <button class="btn-check" onclick="closeReward()">Nhận hoa & Làm tiếp 🚀</button>
     </div>
 
     <div class="score-board">
         <div class="score-info">
             <div class="timer-box">⏱️ <span id="timeText">00:00</span></div>
-            <div>🎯 Tỉ lệ: <span id="ratioText">0/0</span> bài</div>
+            <div>🎯 Đúng: <span id="ratioText">0/0</span> bài</div>
             <div>🏆 Điểm: <span id="scoreText" class="score-highlight">0</span></div>
         </div>
-        <button class="btn-capture" onclick="captureScoreForZalo()">📸 Chụp khoe Ba</button>
+        <button class="btn-capture" onclick="captureScoreForZalo()">📸 Chụp gửi Ba Dũng</button>
     </div>
     
-    <h2>Đại Bản Doanh Toán Lớp 4 🎓</h2>
+    <h2>Học Toán Cùng Xuân Lâm - V26.0 🎓</h2>
 
     <div class="menu-group">
         <select id="grade" onchange="loadTypes()">
-            <option value="4" selected>Lớp 4 (Mặc định)</option>
             <option value="1">Lớp 1</option>
             <option value="2">Lớp 2</option>
             <option value="3">Lớp 3</option>
+            <option value="4" selected>Lớp 4 (Mặc định)</option>
             <option value="5">Lớp 5</option>
         </select>
         <select id="type" onchange="newQuestion()"></select>
     </div>
 
     <div class="question-area">
-        <div id="question">Đang tải đề bài...</div>
-        <div id="formatHint" style="font-size: 13px; color: #666; font-style: italic; margin-top: 8px;"></div>
+        <div id="question">Đang nạp đề bài...</div>
+        <div id="formatHint"></div>
     </div>
 
-    <input type="text" id="answer" placeholder="Đáp án..." autocomplete="off">
+    <input type="text" id="answer" placeholder="Nhập đáp án..." autocomplete="off">
     
     <div id="actionButtons" style="margin-top: 10px;">
-        <button class="btn-check" onclick="check()">Kiểm tra</button>
-        <button class="btn-next" onclick="newQuestion()">Đổi đề bài 📥</button>
+        <button class="btn-check" onclick="check()">Kiểm tra bài</button>
+        <button class="btn-next" onclick="newQuestion()">Lấy đề khác 📥</button>
     </div>
 
     <p id="message"></p>
@@ -76,21 +81,21 @@
 
 <script>
     const dataConfig = {
-        "4": [
-            {n:"Tất cả (Lớp 4)", id:"all"},
-            {n:"Lời văn: Tổng-Hiệu-TBC", id:"4_1"},
-            {n:"Lời văn: Phân số", id:"4_2"},
-            {n:"Siêu đổi đơn vị (Hỗn hợp)", id:"4_3"},
-            {n:"Toán Tỉ số (Tổng/Hiệu Tỉ)", id:"4_4"},
-            {n:"Các loại Góc & Hình học", id:"4_5"},
-            {n:"Tính toán Phân số (Full)", id:"4_6"},
+        "1": [ {n:"Tất cả", id:"all"}, {n:"Cấu tạo số (Chục/Đơn vị)", id:"1_1"}, {n:"Số trước - sau - giữa", id:"1_2"}, {n:"So sánh biểu thức", id:"1_3"}, {n:"Toán đố Lớp 1", id:"1_4"} ],
+        "2": [ {n:"Tất cả", id:"all"}, {n:"Nhân/Chia bảng (2-5)", id:"2_1"}, {n:"Đo lường (kg, l, m)", id:"2_2"}, {n:"Lịch & Thời gian", id:"2_3"}, {n:"Tìm X & Chu vi", id:"2_4"} ],
+        "3": [ {n:"Tất cả", id:"all"}, {n:"Nhân/Chia số lớn", id:"3_1"}, {n:"Toán đố 2 bước tính", id:"3_2"}, {n:"Đo lường mm/ml/g", id:"3_3"}, {n:"Số La Mã", id:"3_4"}, {n:"Biểu thức giá trị", id:"3_5"} ],
+        "4": [ 
+            {n:"Tất cả (Khối 4)", id:"all"}, 
+            {n:"Lời văn: Tổng-Hiệu-TBC", id:"4_1"}, 
+            {n:"Lời văn: Phân số", id:"4_2"}, 
+            {n:"Đổi đơn vị hỗn hợp", id:"4_3"}, 
+            {n:"Tổng-Tỉ / Hiệu-Tỉ", id:"4_4"}, 
+            {n:"Góc & Hình học (XỊN)", id:"4_5"}, 
+            {n:"Phân số (+ - x : )", id:"4_6"}, 
             {n:"Dấu hiệu chia hết", id:"4_7"},
             {n:"Năm & Thế kỷ", id:"4_8"}
         ],
-        "1": [{n:"Cộng trừ phạm vi 100", id:"1_1"}],
-        "2": [{n:"Bảng nhân/chia 2-5", id:"2_1"}],
-        "3": [{n:"Nhân/Chia số lớn", id:"3_1"}],
-        "5": [{n:"Thể tích & Số thập phân", id:"5_1"}]
+        "5": [ {n:"Tất cả", id:"all"}, {n:"Số thập phân (+ - x : )", id:"5_1"}, {n:"Tỉ số phần trăm", id:"5_2"}, {n:"Toán chuyển động", id:"5_3"}, {n:"Diện tích Tròn/Thang", id:"5_4"}, {n:"Thể tích & Bể nước", id:"5_5"}, {n:"Phép tính Thời gian", id:"5_6"} ]
     };
 
     let currentAnswers = [], currentHint = "", currentTypeId = "";
@@ -107,9 +112,7 @@
         if(timerInterval) return;
         timerInterval = setInterval(() => {
             totalSeconds++;
-            let m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-            let s = (totalSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('timeText').innerText = `${m}:${s}`;
+            document.getElementById('timeText').innerText = Math.floor(totalSeconds/60).toString().padStart(2,'0') + ":" + (totalSeconds%60).toString().padStart(2,'0');
         }, 1000);
     }
 
@@ -129,88 +132,89 @@
             currentTypeId = pool[r(0, pool.length-1)];
         } else { currentTypeId = id; }
 
-        let q = "", v = []; isQuestionAttempted = false;
-        document.getElementById('actionButtons').innerHTML = `<button class="btn-check" onclick="check()">Kiểm tra</button><button class="btn-next" onclick="newQuestion()">Đổi đề bài 📥</button>`;
+        let q = "", v = []; isQuestionAttempted = false; currentHint = "";
+        document.getElementById('actionButtons').innerHTML = `<button class="btn-check" onclick="check()">Kiểm tra bài</button><button class="btn-next" onclick="newQuestion()">Lấy đề khác 📥</button>`;
         document.getElementById('explanationBox').style.display = "none";
         document.getElementById('formatHint').innerText = "";
         questionStartTime = Date.now();
 
         switch(currentTypeId) {
-            // --- KHỐI LỚP 4: PHONG PHÚ TỐI ĐA ---
-            case "4_1": { 
-                let type = r(1,3);
-                if(type===1) { // Tổng hiệu thực tế
-                    let t=r(40,100), d=r(4,20); if((t+d)%2!==0) t++;
-                    let lon=(t+d)/2, be=t-lon;
-                    if(r(0,1)){ v.push(lon); q=`Hai lớp 4A và 4B quyên góp được ${t} quyển vở. Lớp 4A quyên góp NHIỀU HƠN lớp 4B là ${d} quyển. Hỏi lớp 4A có bao nhiêu quyển?`; }
-                    else { v.push(be); q=`An và Bình có ${t} viên bi. An có ÍT HƠN Bình ${d} viên. Hỏi An có bao nhiêu viên bi?`; }
-                    currentHint="Dạng Tổng-Hiệu: Số lớn=(T+H):2; Số bé=(T-H):2";
-                } else if(type===2) { // Tuổi tác
-                    let t=r(30,60), d=r(20,30); if((t+d)%2!==0) t++;
-                    v.push((t+d)/2); q=`Tổng số tuổi của bố và con là ${t} tuổi. Bố hơn con ${d} tuổi. Tính tuổi của BỐ?`;
-                    currentHint="Bố là số lớn vì bố nhiều tuổi hơn con!";
-                } else { // Trung bình cộng
-                    let a=r(10,30), b=r(30,50), c=r(15,40); let sum=a+b+c; if(sum%3!==0) c+=(3-sum%3);
-                    v.push((a+b+c)/3); q=`Ba đội công nhân sửa đường được lần lượt là ${a}m, ${b}m và ${c}m đường. Hỏi trung bình mỗi đội sửa được bao nhiêu mét đường?`;
-                }
+            // LỚP 1
+            case "1_1": { let c=r(1,9), d=r(0,9); v.push(c); q=`Số ${c*10+d} gồm mấy CHỤC?`; break; }
+            case "1_2": { let n=r(10,80); v.push(n+1); q=`Số ở giữa của ${n} và ${n+2} là số nào?`; break; }
+            case "1_3": { let a=r(5,9), b=r(1,5), c=r(6,14); v.push((a+b)>c?">":(a+b)<c?"<":"="); q=`Điền dấu >, < hoặc = :\n ${a} + ${b} ... ${c}`; break; }
+            case "1_4": { let a=r(5,10), b=r(1,4); v.push(a-b); q=`Có ${a} quả bóng, bị vỡ mất ${b} quả. Hỏi còn lại bao nhiêu quả?`; break; }
+
+            // LỚP 2
+            case "2_1": { let a=r(2,5), b=r(1,10); if(r(0,1)){ v.push(a*b); q=`${a} x ${b} = ?`; } else { v.push(b); q=`${a*b} : ${a} = ?`; } break; }
+            case "2_2": { let m=r(1,5), t=r(1,2); if(t===1){ v.push(m*10); q=`${m} m = ... dm?`; } else { v.push(m*100); q=`${m} m = ... cm?`; } break; }
+            case "2_3": { const d=["Thứ Hai","Thứ Ba","Thứ Tư","Thứ Sáu"]; let i=r(0,3); v.push(i===3?"Thứ Bảy":d[i+1]); q=`Hôm nay là ${d[i]}, hỏi ngày mai là thứ mấy? (Viết đúng chữ)`; break; }
+            case "2_4": { let c1=r(3,5), c2=r(3,5), c3=r(3,5); v.push(c1+c2+c3); q=`Tính chu vi tam giác có 3 cạnh là ${c1}cm, ${c2}cm và ${c3}cm?`; break; }
+
+            // LỚP 3
+            case "3_1": { let a=r(1000,2000), b=r(2,4); v.push(a*b); q=`Đặt tính: ${a} x ${b} = ?`; break; }
+            case "3_2": { let n=r(3,5), p=r(2,5)*1000, m=r(1,2)*50000; v.push(m-(n*p)); q=`Lâm mua ${n} quyển vở, mỗi quyển ${p}đ. Lâm đưa cô bán hàng ${m}đ. Cô trả lại bao nhiêu tiền?`; break; }
+            case "3_3": { let k=r(1,4), m=r(100,900); v.push(k*1000+m); q=`${k}km ${m}m = ... m?`; break; }
+            case "3_4": { const rom=[{r:"XIV",n:14},{r:"XIX",n:19},{r:"XXI",n:21},{r:"IX",n:9}]; let c=rom[r(0,3)]; v.push(c.n); q=`Số La Mã ${c.r} là số mấy?`; break; }
+            case "3_5": { let a=r(50,100), b=r(20,40), c=r(2,4); v.push((a-b)*c); q=`Tính: (${a} - ${b}) x ${c} = ?`; break; }
+
+            // --- LỚP 4: UPDATE PHONG PHÚ ---
+            case "4_1": {
+                let t=r(60,120), d=r(4,30); if((t+d)%2!==0) t++; let lon=(t+d)/2, be=t-lon;
+                if(r(0,1)){ v.push(lon); q=`Tổng hai số là ${t}, hiệu là ${d}. Tìm số LỚN?`; }
+                else { v.push(be); q=`Cả bố và con có ${t} nhãn vở. Con có ít hơn bố ${d} cái. Hỏi con có bao nhiêu cái?`; }
                 break;
             }
-            case "4_2": {
-                let ms=r(4,9), ts=r(1,ms-1), total=r(5,15)*ms;
-                if(r(0,1)){ v.push((total/ms)*ts); q=`Một cửa hàng có ${total}kg gạo, đã bán đi ${ts}/${ms} số gạo đó. Hỏi cửa hàng đã BÁN được bao nhiêu kg gạo?`; }
-                else { let sold=(total/ms)*ts; v.push(total-sold); q=`Cuộn dây dài ${total}m. Bác thợ điện cắt đi ${ts}/${ms} cuộn dây. Hỏi cuộn dây CÒN LẠI bao nhiêu mét?`; }
-                currentHint="Muốn tìm phân số của một số, ta lấy số đó nhân với phân số.";
-                break;
+            case "4_2": { let ms=r(5,9), ts=r(2,4), tot=r(5,12)*ms; if(r(0,1)){ v.push((tot/ms)*ts); q=`Lớp có ${tot} bạn, ${ts}/${ms} là nữ. Hỏi có bao nhiêu nữ?`; } else { v.push(tot-(tot/ms)*ts); q=`Dây dài ${tot}m, cắt đi ${ts}/${ms}. Hỏi còn lại bao nhiêu mét?`; } break; }
+            case "4_3": { let t=r(1,3); if(t===1){ let tan=r(1,5), kg=r(10,99); v.push(tan*1000+kg); q=`${tan} tấn ${kg} kg = ... kg?`; } else if(t===2){ let m2=r(3,8), dm2=r(5,50); v.push(m2*100+dm2); q=`${m2} m² ${dm2} dm² = ... dm²?`; } else { let y=r(1800,2024); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy?`; } break; }
+            case "4_4": { let pb=1, pl=r(2,5), g=r(6,15); if(r(0,1)){ v.push(g*pl); q=`Tổng là ${g*(pb+pl)}. Số lớn gấp ${pl} lần số bé. Tìm số LỚN?`; } else { v.push(g*pb); q=`Hiệu là ${g*(pl-pb)}. Số lớn gấp ${pl} lần số bé. Tìm số BÉ?`; } break; }
+            
+            // CẬP NHẬT GÓC & HÌNH HỌC LỚP 4
+            case "4_5": { 
+                const ag = [
+                    {q:"Góc có số đo 90 độ là góc gì?", a:["vuông", "góc vuông"]},
+                    {q:"Góc nhỏ hơn góc vuông là góc gì?", a:["nhọn", "góc nhọn"]},
+                    {q:"Góc lớn hơn góc vuông và nhỏ hơn góc bẹt là góc gì?", a:["tù", "góc tù"]},
+                    {q:"Lúc 3 giờ đúng, kim giờ và kim phút tạo thành góc gì?", a:["vuông", "góc vuông"]},
+                    {q:"Lúc 6 giờ đúng, kim giờ và kim phút tạo thành góc gì?", a:["bẹt", "góc bẹt"]},
+                    {q:"Hình chữ nhật có mấy góc vuông?", a:["4"]},
+                    {q:"Góc bẹt bằng bao nhiêu độ?", a:["180", "180 độ"]}
+                ];
+                let c = ag[r(0, ag.length-1)]; q = c.q; v = c.a; break; 
             }
-            case "4_3": {
-                let t = r(1,4);
-                if(t===1){ let tan=r(2,5), kg=r(5,90); v.push(tan*1000+kg); q=`Đổi: ${tan} tấn ${kg} kg = ... kg?`; }
-                else if(t===2){ let m2=r(2,8), dm2=r(5,50); v.push(m2*100+dm2); q=`Đổi: ${m2} m² ${dm2} dm² = ... dm²?`; }
-                else if(t===3){ let km=r(1,5), m=r(100,900); v.push(km*1000+m); q=`Đổi: ${km} km ${m} m = ... m?`; }
-                else { let yen=r(5,20); v.push(yen*10); q=`Đổi: ${yen} yến = ... kg?`; currentHint="1 yến = 10 kg."; }
-                break;
-            }
-            case "4_4": {
-                let pb=1, pl=r(2,5), g=r(4,12);
-                if(r(0,1)){ let t=g*(pb+pl); v.push(g*pl); q=`Tổng hai số là ${t}. Số lớn gấp ${pl} lần số bé. Tìm số LỚN?`; currentHint="Tổng : Tổng số phần x Số phần số lớn."; }
-                else { let h=g*(pl-pb); v.push(g*pb); q=`Hiệu hai số là ${h}. Số bé bằng 1/${pl} số lớn. Tìm số BÉ?`; currentHint="Hiệu : Hiệu số phần x Số phần số bé."; }
-                break;
-            }
-            case "4_5": {
-                let t=r(1,3);
-                if(t===1){ v.push("vuông"); q=`Góc có số đo bằng 90 độ gọi là góc gì?`; }
-                else if(t===2){ let c=r(5,15); v.push(c*4); q=`Một hình vuông có cạnh dài ${c}cm. Tính chu vi?`; }
-                else { let d=r(8,15), r_w=r(4,7); v.push(d*r_w); q=`Diện tích hình chữ nhật có chiều dài ${d}cm, chiều rộng ${r_w}cm là?`; }
-                break;
-            }
-            case "4_6": {
-                let m1=r(2,5), t1=r(1,5), m2=r(2,5), t2=r(1,5), op=r(1,4);
+            
+            // PHÂN SỐ ĐA DẠNG (+ - x : )
+            case "4_6": { 
+                let op = r(1,4); let m1 = r(2,5), t1 = r(1,5), m2 = r(2,5), t2 = r(1,5); 
                 let tkq, mkq, s;
                 if(op===1){ tkq=t1*m2+t2*m1; mkq=m1*m2; s="+"; }
-                else if(op===2){ if(t1*m2<t2*m1){let tx=t1;t1=t2;t2=tx;let mx=m1;m1=m2;m2=mx;} tkq=t1*m2-t2*m1; mkq=m1*m2; s="-"; }
+                else if(op===2){ 
+                    if(t1/m1 < t2/m2){ let tx=t1; t1=t2; t2=tx; let mx=m1; m1=m2; m2=mx; } // Đảm bảo số lớn trừ số bé
+                    tkq=t1*m2-t2*m1; mkq=m1*m2; s="-"; 
+                }
                 else if(op===3){ tkq=t1*t2; mkq=m1*m2; s="x"; }
                 else { tkq=t1*m2; mkq=m1*t2; s=":"; }
-                q=`Tính: ${t1}/${m1} ${s} ${t2}/${m2} = ?`;
-                let g=gcd(tkq,mkq); if(mkq/g===1) v.push((tkq/g).toString()); else v.push(`${tkq/g}/${mkq/g}`);
-                v.push(`${tkq}/${mkq}`);
-                document.getElementById('formatHint').innerText = "Nhập phân số (VD: 3/4) hoặc số tự nhiên.";
-                break;
+                
+                q = `Tính: ${t1}/${m1} ${s} ${t2}/${m2} = ?`;
+                let g = gcd(tkq, mkq); 
+                if(mkq/g === 1) v.push((tkq/g).toString()); else v.push(`${tkq/g}/${mkq/g}`);
+                v.push(`${tkq}/${mkq}`); // Chấp nhận cả chưa rút gọn
+                document.getElementById('formatHint').innerText = "VD: 3/4 hoặc 1";
+                break; 
             }
-            case "4_7": {
-                let n=r(100,900);
-                if(r(0,1)){ v=["0","5"]; q=`Số ${n}* chia hết cho 5 thì chữ số * có thể là số nào?`; }
-                else { let dv=(9-(n%9))%9; v=[dv.toString()]; q=`Để số ${n}* chia hết cho 9 thì * phải là số mấy?`; }
-                break;
-            }
-            case "4_8": { let y=r(1800,2025); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy? (Nhập số tự nhiên)`; break; }
+            
+            case "4_7": { let n=r(11,99); if(r(0,1)){ v=["0","5"]; q=`Số ${n}* chia hết cho 5 thì * là chữ số nào?`; } else { v=[((9-(n%9))%9).toString()]; q=`Số ${n}* chia hết cho 9 thì * là chữ số nào?`; } break; }
+            case "4_8": { let y=r(1800,2026); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy?`; break; }
 
-            // CÁC KHỐI KHÁC (GIỮ NGUYÊN ĐỂ KHÔNG LỖI)
-            case "1_1": { let a=r(10,50), b=r(1,9); v.push(a+b); q=`${a} + ${b} = ?`; break; }
-            case "2_1": { let a=r(2,5), b=r(2,9); v.push(a*b); q=`${a} x ${b} = ?`; break; }
-            case "3_1": { let a=r(100,200), b=r(2,4); v.push(a*b); q=`${a} x ${b} = ?`; break; }
-            case "5_1": { let a=r(1,9), b=r(1,9); v.push((a+b)/10); q=`0,${a} + 0,${b} = ?`; break; }
+            // LỚP 5
+            case "5_1": { let a=r(1,9), b=r(1,9); v.push(((a+b)/10).toFixed(1)); q=`Tính: 0,${a} + 0,${b} = ?`; break; }
+            case "5_2": { let n=r(4,10)*50, p=r(1,4)*10; if(r(0,1)){ v.push(n*p/100); q=`Tìm ${p}% của ${n}?`; } else { v.push(n); q=`Tìm một số biết ${p}% của nó là ${n*p/100}?`; } break; }
+            case "5_3": { let sp=r(30,60), t=r(2,4); v.push(sp*t); q=`Xe máy đi ${sp}km/h trong ${t} giờ. Quãng đường là bao nhiêu km?`; break; }
+            case "5_4": { let d1=r(10,20), d2=r(5,12), h=r(8,12); v.push((d1+d2)*h/2); q=`Hình thang hai đáy ${d1}cm, ${d2}cm, cao ${h}cm. Diện tích?`; break; }
+            case "5_5": { let m3=r(2,5); v.push(m3*1000); q=`Bể có thể tích ${m3}m³. Hỏi bể chứa được bao nhiêu LÍT nước? (1m³=1000L)`; break; }
+            case "5_6": { let h=r(2,5), p=r(10,40); v.push(`${h+1} giờ ${p} phút`); q=`Tính: ${h} giờ ${p} phút + 1 giờ = ?`; break; }
 
-            default: { q="Lỗi ID, hãy chọn lại!"; v=["error"]; }
+            default: { q="Lỗi ID, hãy chọn lại khối lớp!"; v=["error"]; }
         }
 
         currentAnswers = v.map(String).map(s => s.trim().toLowerCase());
@@ -223,9 +227,12 @@
     function check() {
         let raw = document.getElementById('answer').value.trim().toLowerCase().replace(',', '.');
         if (!raw) return;
-        let isCorrect = currentAnswers.some(ans => raw === ans.replace(',', '.') || raw.replace(/\s/g,'') === ans.replace(/\s/g,'').replace(',','.'));
-        let time = Math.round((Date.now() - questionStartTime)/1000);
+        let isCorrect = currentAnswers.some(ans => {
+            let a = ans.replace(',', '.');
+            return raw === a || raw.replace(/\s/g,'') === a.replace(/\s/g,'');
+        });
         
+        let time = Math.round((Date.now() - questionStartTime)/1000);
         if (!isQuestionAttempted) {
             totalQuestions++; isQuestionAttempted = true;
             if (isCorrect) { correctQuestions++; if(errorTracker[currentTypeId]>0) errorTracker[currentTypeId]--; }
@@ -233,33 +240,36 @@
         }
 
         if (isCorrect) {
-            document.getElementById('message').innerText = `Đúng rồi! 🎉 (${time}s)`;
+            document.getElementById('message').innerText = `Chính xác! 🎉 (${time} giây)`;
             document.getElementById('message').className = "success"; score += 10; updateScoreBoard();
             if (score >= 100 && !hasReceivedFlower) {
                 hasReceivedFlower = true;
-                document.getElementById('rewardTimeText').innerText = `Thời gian: ${formatTime(totalSeconds)}`;
+                document.getElementById('rewardTimeText').innerText = `Thời gian hoàn thành: ${formatTime(totalSeconds)}`;
                 document.getElementById('rewardScreen').style.display = "flex";
             } else { setTimeout(newQuestion, 2000); }
         } else {
-            updateScoreBoard(); document.getElementById('message').innerText = "Chưa đúng, nháp lại nhé! 👇";
+            document.getElementById('message').innerText = "Chưa đúng rồi, Lâm cố lên! 👇";
             document.getElementById('message').className = "error";
-            document.getElementById('explanationBox').innerHTML = `💡 <strong>Gợi ý:</strong> ${currentHint || "Con hãy kiểm tra kỹ phép tính."}`;
+            document.getElementById('explanationBox').innerHTML = `💡 <strong>Gợi ý:</strong> Hãy đọc kỹ đề, nháp cẩn thận và kiểm tra đơn vị nhé Lâm!`;
             document.getElementById('explanationBox').style.display = "block";
-            document.getElementById('actionButtons').innerHTML = `<button class="btn-retry" onclick="retryQuestion()">Làm lại 🔄</button><button class="btn-next" onclick="newQuestion()">Bỏ qua ⏭️</button>`;
+            document.getElementById('actionButtons').innerHTML = `<button class="btn-retry" onclick="retryQuestion()">Thử lại câu này 🔄</button><button class="btn-next" onclick="newQuestion()">Bỏ qua ⏭️</button>`;
         }
     }
 
     async function captureScoreForZalo() {
-        const canvas = document.createElement('canvas'); canvas.width = 500; canvas.height = 200;
+        const canvas = document.createElement('canvas'); canvas.width = 550; canvas.height = 250;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#f0f8ff'; ctx.fillRect(0,0,500,200);
-        ctx.font = 'bold 24px Arial'; ctx.fillStyle = '#0056b3'; ctx.fillText('📊 Báo Cáo Học Tập Xuân Lâm', 30, 50);
-        ctx.font = '20px Arial'; ctx.fillStyle = '#333'; ctx.fillText(`🎯 Tỉ lệ đúng: ${correctQuestions}/${totalQuestions}`, 30, 100);
-        ctx.fillText(`⏱️ Thời gian: ${formatTime(totalSeconds)}`, 30, 140);
-        ctx.font = 'bold 24px Arial'; ctx.fillStyle = '#28a745'; ctx.fillText(`🏆 Điểm: ${score}`, 30, 180);
+        ctx.fillStyle = '#f0f8ff'; ctx.fillRect(0,0,550,250);
+        ctx.strokeStyle = '#0056b3'; ctx.lineWidth = 5; ctx.strokeRect(5,5,540,240);
+        ctx.font = 'bold 28px Arial'; ctx.fillStyle = '#0056b3'; ctx.fillText('📊 KẾT QUẢ HỌC TẬP XUÂN LÂM', 40, 60);
+        ctx.font = '22px Arial'; ctx.fillStyle = '#333';
+        ctx.fillText(`🎯 Tỉ lệ đúng: ${correctQuestions}/${totalQuestions} bài`, 40, 110);
+        ctx.fillText(`⏱️ Tổng thời gian: ${formatTime(totalSeconds)}`, 40, 150);
+        ctx.font = 'bold 32px Arial'; ctx.fillStyle = '#28a745';
+        ctx.fillText(`🏆 TỔNG ĐIỂM: ${score}`, 40, 210);
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ 'image/png': blob });
-            navigator.clipboard.write([item]).then(() => alert('Đã copy ảnh! Hãy Paste vào Zalo.')).catch(() => window.open(canvas.toDataURL(), '_blank'));
+            navigator.clipboard.write([item]).then(() => alert('Đã chụp và copy ảnh! Hãy Paste (Ctrl+V) vào Zalo nhé.')).catch(() => window.open(canvas.toDataURL(), '_blank'));
         });
     }
 
