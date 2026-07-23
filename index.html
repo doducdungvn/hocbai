@@ -1,283 +1,1152 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siêu Trợ Lý Toán Học - Xuân Lâm V26.0 🚀</title>
-    <style>
-        :root { --primary: #0056b3; --success: #28a745; --error: #dc3545; --warning: #ffc107; --bg: #f4f7f9; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: var(--bg); margin: 0; padding: 15px; }
-        .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: inline-block; width: 95%; max-width: 850px; position: relative; overflow: hidden; border: 1px solid #e0e0e0; }
-        .score-board { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-        .score-info { font-weight: bold; color: var(--primary); font-size: 16px; text-align: left; line-height: 1.7; }
-        .score-highlight { color: var(--success); font-size: 24px; }
-        .timer-box { color: #d81b60; font-family: 'Courier New', Courier, monospace; font-size: 19px; background: #ffe4e1; padding: 5px 12px; border-radius: 8px; display: inline-block; margin-bottom: 5px; }
-        .btn-capture { background: #0084FF; color: white; border: none; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
-        .btn-capture:hover { background: #006bce; transform: translateY(-2px); }
-        h2 { color: var(--primary); margin-top: 0; margin-bottom: 20px; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
-        .menu-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; justify-content: center; }
-        select { padding: 12px; font-size: 15px; border-radius: 10px; border: 2px solid #ddd; outline: none; min-width: 200px; background: #fff; cursor: pointer; font-weight: 500; }
-        .question-area { background: #fff; margin: 20px 0; padding: 30px; border-radius: 15px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border: 2px solid #0056b3; text-align: left; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); }
-        #question { font-size: 23px; font-weight: bold; color: #2c3e50; line-height: 1.6; width: 100%; }
-        #formatHint { font-size: 14px; color: #7f8c8d; font-style: italic; margin-top: 10px; }
-        input[type="text"] { padding: 15px; font-size: 28px; width: 320px; text-align: center; border: 3px solid #ddd; border-radius: 15px; outline: none; margin: 15px 0; transition: 0.3s; color: #0056b3; font-weight: bold; }
-        input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,86,179,0.2); }
-        .btn-check, .btn-next, .btn-retry { color: white; padding: 15px 35px; font-size: 18px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin: 5px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn-check { background: var(--success); } .btn-next { background: var(--primary); } .btn-retry { background: var(--warning); color: #333; }
-        .btn-check:hover, .btn-next:hover { opacity: 0.9; transform: scale(1.02); }
-        #message { font-size: 20px; margin-top: 15px; font-weight: 700; min-height: 30px; }
-        .explanation-box { background: #fff3cd; color: #856404; border-left: 6px solid #ffc107; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: left; font-size: 16px; display: none; line-height: 1.6; }
-        #rewardScreen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.99); z-index: 100; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .success { color: var(--success); } .error { color: var(--error); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siêu Trợ Lý Toán Học - Xuân Lâm V20.0 🚀</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+    body { font-family: 'Nunito', sans-serif; }
+    
+    .shake {
+      animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+    
+    .pop-in {
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Fancy progress bar stripe */
+    .progress-stripes {
+      background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+      background-size: 1rem 1rem;
+      animation: progress-stripes 1s linear infinite;
+    }
+    @keyframes progress-stripes {
+      from { background-position: 1rem 0; }
+      to { background-position: 0 0; }
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+            success: { 400: '#34d399', 500: '#10b981', 600: '#059669' },
+            warning: { 400: '#fbbf24', 500: '#f59e0b' }
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body>
-<div class="container">
-    <div id="rewardScreen">
-        <div style="font-size: 100px;">🎈 🏆 🎈</div>
-        <h1 style="color: #d81b60; font-size: 45px;">XUÂN LÂM VÔ ĐỊCH!</h1>
-        <p style="font-size: 24px;">Con đã vượt mốc 100 điểm xuất sắc!</p>
-        <div id="rewardTimeText" style="font-weight: bold; color: #0056b3; font-size: 22px; margin: 20px 0;"></div>
-        <button class="btn-check" onclick="closeReward()">Nhận hoa & Làm tiếp 🚀</button>
+<body class="bg-brand-50 min-h-screen text-slate-800 flex items-center justify-center p-4 selection:bg-brand-200">
+  
+  <div class="max-w-2xl w-full bg-white rounded-[2rem] shadow-2xl overflow-hidden relative border-4 border-white pop-in">
+    
+    <!-- Reward Screen (Hidden by default) -->
+    <div id="rewardScreen" class="absolute inset-0 bg-white/95 backdrop-blur-sm z-50 flex-col justify-center items-center text-center hidden">
+      <div class="text-[5rem] mb-4 animate-bounce">🏆 🌟 🚀</div>
+      <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500 mb-4">Lâm Quá Xuất Sắc!</h1>
+      <p class="text-xl font-bold text-slate-700 mb-2">Con đã chính thức đạt mốc 100 điểm!</p>
+      <div id="rewardTimeText" class="text-lg font-bold text-brand-600 mb-8 bg-brand-100 px-6 py-2 rounded-full inline-block"></div>
+      <button onclick="closeReward()" class="bg-gradient-to-r from-success-400 to-success-600 hover:from-success-500 hover:to-success-700 text-white font-black text-xl px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+        Học tiếp thôi! 💪
+      </button>
     </div>
 
-    <div class="score-board">
-        <div class="score-info">
-            <div class="timer-box">⏱️ <span id="timeText">00:00</span></div>
-            <div>🎯 Đúng: <span id="ratioText">0/0</span> bài</div>
-            <div>🏆 Điểm: <span id="scoreText" class="score-highlight">0</span></div>
+    <!-- Header & Progress -->
+    <div class="bg-gradient-to-r from-brand-600 to-indigo-600 p-6 text-white text-center relative overflow-hidden">
+      <!-- Decor circles -->
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+      <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+      
+      <h1 class="text-3xl font-black mb-2 relative z-10 drop-shadow-md">Siêu Trợ Lý Toán Học</h1>
+      <p class="text-brand-100 font-bold tracking-wider uppercase text-sm relative z-10">Bản Đặc Quyền Xuân Lâm V20.0</p>
+      
+      <!-- Progress Bar -->
+      <div class="mt-6 bg-black/20 rounded-full h-4 w-full p-1 relative z-10 shadow-inner">
+        <div id="progressBar" class="bg-gradient-to-r from-yellow-300 to-success-400 h-full rounded-full transition-all duration-500 ease-out progress-stripes w-0 relative">
+           <!-- Sparkle on tip -->
+           <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-4 h-4 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
         </div>
-        <button class="btn-capture" onclick="captureScoreForZalo()">📸 Chụp gửi Ba Dũng</button>
+      </div>
+      <div class="flex justify-between text-xs font-bold text-brand-100 mt-2 px-1 relative z-10 uppercase tracking-widest">
+        <span>0 Điểm</span>
+        <span>Mục tiêu: 100 Điểm 🏆</span>
+      </div>
     </div>
-    
-    <h2>Học Toán Cùng Xuân Lâm - V26.0 🎓</h2>
 
-    <div class="menu-group">
-        <select id="grade" onchange="loadTypes()">
-            <option value="1">Lớp 1</option>
-            <option value="2">Lớp 2</option>
-            <option value="3">Lớp 3</option>
-            <option value="4" selected>Lớp 4 (Mặc định)</option>
-            <option value="5">Lớp 5</option>
+    <!-- Score Board -->
+    <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex gap-4 items-center">
+        <div class="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-center items-center">
+          <span class="text-[10px] uppercase font-bold text-slate-400">Thời gian</span>
+          <span id="timeText" class="font-black text-rose-500 font-mono text-lg leading-tight">00:00</span>
+        </div>
+        <div class="flex flex-col">
+          <div class="text-sm font-bold text-slate-500">🎯 Tỉ lệ đúng: <span id="ratioText" class="text-slate-800">0/0</span></div>
+          <div class="text-sm font-bold text-slate-500">🏆 Điểm số: <span id="scoreText" class="text-brand-600 font-black text-xl">0</span></div>
+        </div>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="captureScoreForZalo()" class="bg-indigo-100 text-indigo-700 hover:bg-indigo-200 font-bold px-4 py-2 rounded-xl text-sm transition-colors flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>
+          Chụp khoe Ba
+        </button>
+        <button onclick="downloadScoreImage()" class="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 font-bold px-4 py-2 rounded-xl text-sm transition-colors flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+          Tải xuống
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="p-6 md:p-8">
+      
+      <!-- Menus -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <select id="grade" onchange="loadTypes()" class="flex-1 bg-slate-50 border-2 border-slate-200 text-slate-700 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition-all appearance-none cursor-pointer">
+          <option value="1">🎓 Lớp 1</option>
+          <option value="2">🎓 Lớp 2</option>
+          <option value="3">🎓 Lớp 3</option>
+          <option value="4">🎓 Lớp 4</option>
+          <option value="5" selected>🎓 Lớp 5 (Full Logic)</option>
+          <option value="6">🎓 Lớp 6</option>
+          <option value="7">🎓 Lớp 7</option>
+          <option value="8">🎓 Lớp 8</option>
+          <option value="9">🎓 Lớp 9</option>
+          <option value="10">🎓 Lớp 10</option>
+          <option value="11">🎓 Lớp 11</option>
+          <option value="12">🎓 Lớp 12</option>
         </select>
-        <select id="type" onchange="newQuestion()"></select>
-    </div>
+        <select id="type" onchange="newQuestion()" class="flex-[2] bg-slate-50 border-2 border-slate-200 text-slate-700 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition-all appearance-none cursor-pointer">
+          <!-- Options injected by JS -->
+        </select>
+      </div>
 
-    <div class="question-area">
-        <div id="question">Đang nạp đề bài...</div>
-        <div id="formatHint"></div>
-    </div>
+      <!-- Question Area -->
+      <div id="questionContainer" class="bg-gradient-to-b from-slate-50 to-white border-2 border-slate-200 rounded-2xl p-6 md:p-8 mb-6 shadow-sm min-h-[160px] flex flex-col justify-center transition-all">
+        <h2 id="question" class="text-2xl md:text-3xl font-black text-slate-800 leading-snug">Đang tải đề bài...</h2>
+        <p id="formatHint" class="text-sm font-bold text-slate-400 mt-3"></p>
+      </div>
 
-    <input type="text" id="answer" placeholder="Nhập đáp án..." autocomplete="off">
-    
-    <div id="actionButtons" style="margin-top: 10px;">
-        <button class="btn-check" onclick="check()">Kiểm tra bài</button>
-        <button class="btn-next" onclick="newQuestion()">Lấy đề khác 📥</button>
-    </div>
+      <!-- Answer Input -->
+      <div class="flex flex-col items-center gap-4">
+        <input type="text" id="answer" placeholder="Gõ đáp án vào đây..." autocomplete="off" class="w-full max-w-sm text-center text-3xl font-black text-brand-700 placeholder-slate-300 bg-slate-50 border-4 border-slate-200 rounded-2xl py-4 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner">
+        
+        <!-- Feedback Message -->
+        <div id="message" class="text-lg font-bold min-h-[32px] transition-all"></div>
+        
+        <!-- Action Buttons -->
+        <div id="actionButtons" class="flex flex-wrap justify-center gap-3 w-full mt-2">
+          <!-- Injected by JS -->
+        </div>
+      </div>
 
-    <p id="message"></p>
-    <div class="explanation-box" id="explanationBox"></div>
-</div>
+      <!-- Hint Box -->
+      <div id="explanationBox" class="hidden mt-6 bg-amber-50 border-2 border-amber-200 rounded-2xl p-5 relative">
+        <div class="absolute -top-3 left-5 bg-amber-100 text-amber-700 font-black text-xs px-3 py-1 rounded-full uppercase tracking-widest border border-amber-200">Gợi Ý Siêu Cấp 💡</div>
+        <div id="explanationText" class="text-amber-800 font-bold leading-relaxed pt-2"></div>
+      </div>
+
+    </div>
+  </div>
 
 <script>
-    const dataConfig = {
-        "1": [ {n:"Tất cả", id:"all"}, {n:"Cấu tạo số (Chục/Đơn vị)", id:"1_1"}, {n:"Số trước - sau - giữa", id:"1_2"}, {n:"So sánh biểu thức", id:"1_3"}, {n:"Toán đố Lớp 1", id:"1_4"} ],
-        "2": [ {n:"Tất cả", id:"all"}, {n:"Nhân/Chia bảng (2-5)", id:"2_1"}, {n:"Đo lường (kg, l, m)", id:"2_2"}, {n:"Lịch & Thời gian", id:"2_3"}, {n:"Tìm X & Chu vi", id:"2_4"} ],
-        "3": [ {n:"Tất cả", id:"all"}, {n:"Nhân/Chia số lớn", id:"3_1"}, {n:"Toán đố 2 bước tính", id:"3_2"}, {n:"Đo lường mm/ml/g", id:"3_3"}, {n:"Số La Mã", id:"3_4"}, {n:"Biểu thức giá trị", id:"3_5"} ],
-        "4": [ 
-            {n:"Tất cả (Khối 4)", id:"all"}, 
-            {n:"Lời văn: Tổng-Hiệu-TBC", id:"4_1"}, 
-            {n:"Lời văn: Phân số", id:"4_2"}, 
-            {n:"Đổi đơn vị hỗn hợp", id:"4_3"}, 
-            {n:"Tổng-Tỉ / Hiệu-Tỉ", id:"4_4"}, 
-            {n:"Góc & Hình học (XỊN)", id:"4_5"}, 
-            {n:"Phân số (+ - x : )", id:"4_6"}, 
-            {n:"Dấu hiệu chia hết", id:"4_7"},
-            {n:"Năm & Thế kỷ", id:"4_8"}
-        ],
-        "5": [ {n:"Tất cả", id:"all"}, {n:"Số thập phân (+ - x : )", id:"5_1"}, {n:"Tỉ số phần trăm", id:"5_2"}, {n:"Toán chuyển động", id:"5_3"}, {n:"Diện tích Tròn/Thang", id:"5_4"}, {n:"Thể tích & Bể nước", id:"5_5"}, {n:"Phép tính Thời gian", id:"5_6"} ]
-    };
+  const dataConfig = {
+      "1": [ {n:"🎲 Trộn tất cả (Lớp 1)", id:"all"}, {n:"➕➖ Cộng trừ phạm vi 100", id:"1_1"}, {n:"🔢 Số liền trước - liền sau", id:"1_2"}, {n:"⚖️ So sánh số (<, >, =)", id:"1_3"} ],
+      "2": [ {n:"🎲 Trộn tất cả (Lớp 2)", id:"all"}, {n:"✖️➗ Bảng nhân/chia (2-5)", id:"2_1"}, {n:"📏 Đo lường (m, dm, cm)", id:"2_2"}, {n:"⏳ Thời gian & Ngày tháng", id:"2_4"} ],
+      "3": [ {n:"🎲 Trộn tất cả (Lớp 3)", id:"all"}, {n:"✖️➗ Nhân/Chia số lớn", id:"3_1"}, {n:"🔲 Chu vi & Diện tích", id:"3_3"}, {n:"🧮 Tính giá trị biểu thức", id:"3_5"} ],
+      "4": [ {n:"🎲 Trộn tất cả (Lớp 4)", id:"all"}, {n:"🧩 Toán đố: Tổng-Hiệu", id:"4_1"}, {n:"⚖️ Đổi Đơn Vị Đa Năng", id:"4_3"}, {n:"📊 Tổng-Tỉ & Hiệu-Tỉ", id:"4_4"}, {n:"🍕 4 phép tính Phân số", id:"4_6"} ],
+      "5": [ {n:"🎲 Trộn tất cả (Lớp 5)", id:"all"}, {n:"⏺️ Số thập phân", id:"5_1"}, {n:"💯 Tỉ số phần trăm", id:"5_2"}, {n:"🚗 Toán chuyển động", id:"5_3"}, {n:"⭕ Hình học: Tròn, Thang", id:"5_4"}, {n:"🧊 Thể tích Siêu Cấp", id:"5_6"} ],
+      "6": [ {n:"🎲 Trộn tất cả (Lớp 6)", id:"all"}, {n:"🧬 Số nguyên & Luỹ thừa", id:"6_1"}, {n:"☘️ Tìm x (Ước & Bội)", id:"6_2"}, {n:"🍕 Rút gọn Phân số", id:"6_3"} ],
+      "7": [ {n:"🎲 Trộn tất cả (Lớp 7)", id:"all"}, {n:"⚖️ Tỉ lệ thức (Tìm x)", id:"7_1"}, {n:"📈 Số vô tỉ & Căn bậc hai", id:"7_2"}, {n:"📐 Góc trong tam giác", id:"7_3"} ],
+      "8": [ {n:"🎲 Trộn tất cả (Lớp 8)", id:"all"}, {n:"🧮 Hằng đẳng thức", id:"8_1"}, {n:"🧬 Phương trình bậc nhất", id:"8_2"}, {n:"📐 Định lý Pythagore", id:"8_3"} ],
+      "9": [ {n:"🎲 Trộn tất cả (Lớp 9)", id:"all"}, {n:"📈 Căn thức bậc hai", id:"9_1"}, {n:"🧬 Hệ phương trình 2 ẩn", id:"9_2"}, {n:"📉 Định lý Vi-ét (Tổng-Tích)", id:"9_3"} ],
+      "10": [ {n:"🎲 Trộn tất cả (Lớp 10)", id:"all"}, {n:"🎯 Tập hợp & Phép toán", id:"10_1"}, {n:"📈 Đỉnh của Parabol", id:"10_2"}, {n:"📐 Tích vô hướng Vectơ", id:"10_3"} ],
+      "11": [ {n:"🎲 Trộn tất cả (Lớp 11)", id:"all"}, {n:"🌀 Lượng giác căn bản", id:"11_1"}, {n:"🔢 Cấp số cộng & nhân", id:"11_2"}, {n:"🎲 Tổ hợp & Xác suất", id:"11_3"} ],
+      "12": [ {n:"🎲 Trộn tất cả (Lớp 12)", id:"all"}, {n:"📈 Tiệm cận & Cực trị", id:"12_1"}, {n:"🗝️ Mũ & Logarit", id:"12_2"}, {n:"🌀 Nguyên hàm & Tích phân", id:"12_3"}, {n:"🧊 Số phức căn bản", id:"12_4"} ]
+  };
 
-    let currentAnswers = [], currentHint = "", currentTypeId = "";
-    let score = 0, totalQuestions = 0, correctQuestions = 0;
-    let isQuestionAttempted = false, hasReceivedFlower = false, errorTracker = {}; 
-    let totalSeconds = 0, timerInterval = null, questionStartTime = 0;
+  let currentAnswers = [], currentHint = "", currentTypeId = "";
+  let score = 0, totalQuestions = 0, correctQuestions = 0;
+  let isQuestionAttempted = false, hasReceivedFlower = false, errorTracker = {}; 
+  let totalSeconds = 0, timerInterval = null, questionStartTime = 0;
 
-    function r(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-    function gcd(a, b) { a=Math.abs(a); b=Math.abs(b); return b ? gcd(b, a % b) : a; }
-    function formatTime(sec) { let m = Math.floor(sec/60); let s = sec%60; return m > 0 ? `${m}p ${s}s` : `${s}s`; }
-    function updateScoreBoard() { document.getElementById('scoreText').innerText = score; document.getElementById('ratioText').innerText = `${correctQuestions}/${totalQuestions}`; }
+  // Utilities
+  function r(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function gcd(a, b) { a=Math.abs(a); b=Math.abs(b); return b ? gcd(b, a % b) : a; }
+  function formatTime(sec) { let m = Math.floor(sec/60); let s = sec%60; return m > 0 ? `${m}p ${s}s` : `${s}s`; }
+  
+  function updateScoreBoard() { 
+      document.getElementById('scoreText').innerText = score; 
+      document.getElementById('ratioText').innerText = `${correctQuestions}/${totalQuestions}`; 
+      
+      // Update progress bar
+      let target = 100;
+      let pct = Math.min((score / target) * 100, 100);
+      document.getElementById('progressBar').style.width = `${pct}%`;
+  }
 
-    function startGlobalTimer() {
-        if(timerInterval) return;
-        timerInterval = setInterval(() => {
-            totalSeconds++;
-            document.getElementById('timeText').innerText = Math.floor(totalSeconds/60).toString().padStart(2,'0') + ":" + (totalSeconds%60).toString().padStart(2,'0');
-        }, 1000);
-    }
+  function startGlobalTimer() {
+      if(timerInterval) return;
+      timerInterval = setInterval(() => {
+          totalSeconds++;
+          let m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+          let s = (totalSeconds % 60).toString().padStart(2, '0');
+          document.getElementById('timeText').innerText = `${m}:${s}`;
+      }, 1000);
+  }
 
-    function loadTypes() {
-        const g = document.getElementById('grade').value;
-        document.getElementById('type').innerHTML = dataConfig[g].map(i => `<option value="${i.id}">${i.n}</option>`).join('');
-        newQuestion();
-    }
+  function loadTypes() {
+      const g = document.getElementById('grade').value;
+      document.getElementById('type').innerHTML = dataConfig[g].map(i => `<option value="${i.id}">${i.n}</option>`).join('');
+      newQuestion();
+  }
 
-    function newQuestion() {
-        let id = document.getElementById('type').value;
-        const grade = document.getElementById('grade').value;
-        if (id === "all") {
-            const types = dataConfig[grade].filter(i => i.id !== "all");
-            let pool = [];
-            types.forEach(t => { let w = 1 + (errorTracker[t.id] || 0) * 3; for(let i=0; i<w; i++) pool.push(t.id); });
-            currentTypeId = pool[r(0, pool.length-1)];
-        } else { currentTypeId = id; }
+  // Define buttons globally for reuse
+  const btnCheckHtml = `<button class="bg-brand-500 hover:bg-brand-600 text-white font-black text-lg px-10 py-3 rounded-2xl shadow-md transition-all hover:scale-105 active:scale-95 flex-1 max-w-[200px]" onclick="check()">Kiểm tra 🚀</button>`;
+  const btnNextHtml = `<button class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-lg px-6 py-3 rounded-2xl transition-all" onclick="newQuestion()">Đổi đề ⏭️</button>`;
+  const btnRetryHtml = `<button class="bg-warning-400 hover:bg-warning-500 text-white font-black text-lg px-8 py-3 rounded-2xl shadow-md transition-all flex-1 max-w-[200px]" onclick="retryQuestion()">Thử lại 🔄</button>`;
 
-        let q = "", v = []; isQuestionAttempted = false; currentHint = "";
-        document.getElementById('actionButtons').innerHTML = `<button class="btn-check" onclick="check()">Kiểm tra bài</button><button class="btn-next" onclick="newQuestion()">Lấy đề khác 📥</button>`;
-        document.getElementById('explanationBox').style.display = "none";
-        document.getElementById('formatHint').innerText = "";
-        questionStartTime = Date.now();
+  function newQuestion() {
+      let id = document.getElementById('type').value;
+      const grade = document.getElementById('grade').value;
+      
+      // Smart random if "all" is selected (weights based on errors)
+      if (id === "all") {
+          const types = dataConfig[grade].filter(i => i.id !== "all");
+          let pool = [];
+          types.forEach(t => { let w = 1 + (errorTracker[t.id] || 0) * 3; for(let i=0; i<w; i++) pool.push(t.id); });
+          currentTypeId = pool[r(0, pool.length-1)];
+      } else { currentTypeId = id; }
 
-        switch(currentTypeId) {
-            // LỚP 1
-            case "1_1": { let c=r(1,9), d=r(0,9); v.push(c); q=`Số ${c*10+d} gồm mấy CHỤC?`; break; }
-            case "1_2": { let n=r(10,80); v.push(n+1); q=`Số ở giữa của ${n} và ${n+2} là số nào?`; break; }
-            case "1_3": { let a=r(5,9), b=r(1,5), c=r(6,14); v.push((a+b)>c?">":(a+b)<c?"<":"="); q=`Điền dấu >, < hoặc = :\n ${a} + ${b} ... ${c}`; break; }
-            case "1_4": { let a=r(5,10), b=r(1,4); v.push(a-b); q=`Có ${a} quả bóng, bị vỡ mất ${b} quả. Hỏi còn lại bao nhiêu quả?`; break; }
+      let q = "", v = []; isQuestionAttempted = false;
+      document.getElementById('actionButtons').innerHTML = btnCheckHtml + btnNextHtml;
+      document.getElementById('explanationBox').classList.add("hidden");
+      document.getElementById('formatHint').innerText = "";
+      
+      // Reset UI states
+      const answerInput = document.getElementById('answer');
+      answerInput.classList.remove('border-success-400', 'bg-success-50', 'border-rose-400', 'bg-rose-50');
+      document.getElementById('questionContainer').classList.remove('shake');
+      
+      questionStartTime = Date.now();
+      currentHint = "Con thử nháp lại cẩn thận xem sao nhé!"; // Default hint
 
-            // LỚP 2
-            case "2_1": { let a=r(2,5), b=r(1,10); if(r(0,1)){ v.push(a*b); q=`${a} x ${b} = ?`; } else { v.push(b); q=`${a*b} : ${a} = ?`; } break; }
-            case "2_2": { let m=r(1,5), t=r(1,2); if(t===1){ v.push(m*10); q=`${m} m = ... dm?`; } else { v.push(m*100); q=`${m} m = ... cm?`; } break; }
-            case "2_3": { const d=["Thứ Hai","Thứ Ba","Thứ Tư","Thứ Sáu"]; let i=r(0,3); v.push(i===3?"Thứ Bảy":d[i+1]); q=`Hôm nay là ${d[i]}, hỏi ngày mai là thứ mấy? (Viết đúng chữ)`; break; }
-            case "2_4": { let c1=r(3,5), c2=r(3,5), c3=r(3,5); v.push(c1+c2+c3); q=`Tính chu vi tam giác có 3 cạnh là ${c1}cm, ${c2}cm và ${c3}cm?`; break; }
+      switch(currentTypeId) {
+          // --- KHỐI 1 ---
+          case "1_1": { 
+              let a=r(10,80), b=r(1,19); 
+              if(r(0,1)){ v.push(a+b); q=`${a} + ${b} = ?`; } 
+              else { v.push(a-b); q=`${a} - ${b} = ?`; } 
+              break; 
+          }
+          case "1_2": {
+              let n1 = r(10, 98);
+              if(r(0,1)) { v.push(n1-1); q=`Số liền trước của ${n1} là số nào?`; currentHint=`Số liền trước của ${n1} là số bé hơn ${n1} một đơn vị.`; }
+              else { v.push(n1+1); q=`Số liền sau của ${n1} là số nào?`; currentHint=`Số liền sau của ${n1} là số lớn hơn ${n1} một đơn vị.`; }
+              break;
+          }
+          case "1_3": {
+              let c1=r(10,99), c2=r(10,99);
+              while(c1===c2) c2=r(10,99);
+              if (r(0,1)) { v.push(c1 > c2 ? ">" : "<"); q=`Điền dấu >, <, = vào chỗ chấm: ${c1} ... ${c2}`; }
+              else { c2=c1; v.push("="); q=`Điền dấu >, <, = vào chỗ chấm: ${c1} ... ${c2}`; }
+              document.getElementById('formatHint').innerText = "Chỉ gõ 1 dấu (Ví dụ: >)";
+              break;
+          }
+          case "1_4": {
+              let a = r(1, 10), b = r(11, 20);
+              let type = r(1, 2);
+              if (type === 1) {
+                  v.push(b - a); q = `Tìm x biết: x + ${a} = ${b}`;
+                  currentHint = `Muốn tìm số hạng x chưa biết, ta lấy tổng ${b} trừ đi số hạng đã biết ${a}.`;
+              } else {
+                  a = r(1, 9); let x_val = r(10, 19);
+                  v.push(x_val); q = `Tìm x biết: x - ${a} = ${x_val - a}`;
+                  currentHint = `Muốn tìm số bị chia/số bị trừ x, ta lấy hiệu cộng với số trừ: x = hiệu + ${a}.`;
+              }
+              break;
+          }
+          case "1_5": {
+              let tens = r(1, 9);
+              let ones = r(0, 9);
+              let total = tens * 10 + ones;
+              let type = r(1, 2);
+              if (type === 1) {
+                  v.push(tens); q = `Số ${total} gồm mấy chục và mấy đơn vị? Trả lời số chục?`;
+                  currentHint = `Hàng chục đứng trước, hàng đơn vị đứng sau.`;
+              } else {
+                  v.push(ones); q = `Số ${total} gồm mấy chục và mấy đơn vị? Trả lời số đơn vị?`;
+                  currentHint = `Hàng chục đứng trước, hàng đơn vị đứng sau.`;
+              }
+              break;
+          }
 
-            // LỚP 3
-            case "3_1": { let a=r(1000,2000), b=r(2,4); v.push(a*b); q=`Đặt tính: ${a} x ${b} = ?`; break; }
-            case "3_2": { let n=r(3,5), p=r(2,5)*1000, m=r(1,2)*50000; v.push(m-(n*p)); q=`Lâm mua ${n} quyển vở, mỗi quyển ${p}đ. Lâm đưa cô bán hàng ${m}đ. Cô trả lại bao nhiêu tiền?`; break; }
-            case "3_3": { let k=r(1,4), m=r(100,900); v.push(k*1000+m); q=`${k}km ${m}m = ... m?`; break; }
-            case "3_4": { const rom=[{r:"XIV",n:14},{r:"XIX",n:19},{r:"XXI",n:21},{r:"IX",n:9}]; let c=rom[r(0,3)]; v.push(c.n); q=`Số La Mã ${c.r} là số mấy?`; break; }
-            case "3_5": { let a=r(50,100), b=r(20,40), c=r(2,4); v.push((a-b)*c); q=`Tính: (${a} - ${b}) x ${c} = ?`; break; }
+          // --- KHỐI 2 ---
+          case "2_1": {
+              let t2 = r(2,5), m2 = r(1,10);
+              if (r(0,1)) { v.push(t2*m2); q=`${t2} x ${m2} = ?`; }
+              else { v.push(m2); q=`${t2*m2} : ${t2} = ?`; }
+              break;
+          }
+          case "2_2": {
+              let u2 = ["cm", "dm", "m"][r(0,2)];
+              let l1=r(1,20), l2=r(1,20);
+              v.push(l1+l2); q=`${l1}${u2} + ${l2}${u2} = ... ${u2}?`;
+              document.getElementById('formatHint').innerText = "Chỉ gõ số, không gõ đơn vị";
+              break;
+          }
+          case "2_4": {
+              let days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"];
+              let tIdx = r(0,6); let tDate = r(1,20);
+              v.push(tDate+7); q=`Hôm nay là ${days[tIdx]} ngày ${tDate}. Hỏi ${days[tIdx]} tuần sau là ngày mấy?`;
+              currentHint = "Một tuần có 7 ngày. Hãy lấy ngày hiện tại cộng thêm 7 nhé.";
+              break;
+          }
+          case "2_5": {
+              let type = r(1, 3);
+              if (type === 1) {
+                  let a = r(2, 5), x = r(2, 9);
+                  v.push(x); q = `Tìm x biết: ${a} x x = ${a*x}`;
+                  currentHint = `Tìm thừa số x bằng cách lấy tích chia cho thừa số đã biết: x = tích : ${a}.`;
+              } else if (type === 2) {
+                  let a = r(2, 5), x = r(2, 5);
+                  v.push(a*x); q = `Tìm x biết: x : ${a} = ${x}`;
+                  currentHint = `Tìm số bị chia x bằng cách lấy thương nhân với số chia: x = thương x ${a}.`;
+              } else {
+                  let a = r(20, 50), x = r(5, 15);
+                  v.push(x); q = `Tìm x biết: ${a} - x = ${a - x}`;
+                  currentHint = `Tìm số trừ x bằng cách lấy số bị trừ trừ đi hiệu: x = ${a} - hiệu.`;
+              }
+              break;
+          }
+          case "2_6": {
+              let a = r(2, 10), b = r(2, 10), c = r(2, 10);
+              v.push(a + b + c); q = `Độ dài đường gấp khúc gồm 3 đoạn thẳng lần lượt là ${a}cm, ${b}cm, ${c}cm là bao nhiêu cm?`;
+              document.getElementById('formatHint').innerText = "Chỉ gõ số.";
+              currentHint = `Độ dài đường gấp khúc bằng tổng độ dài các đoạn thẳng thành phần cộng lại.`;
+              break;
+          }
 
-            // --- LỚP 4: UPDATE PHONG PHÚ ---
-            case "4_1": {
-                let t=r(60,120), d=r(4,30); if((t+d)%2!==0) t++; let lon=(t+d)/2, be=t-lon;
-                if(r(0,1)){ v.push(lon); q=`Tổng hai số là ${t}, hiệu là ${d}. Tìm số LỚN?`; }
-                else { v.push(be); q=`Cả bố và con có ${t} nhãn vở. Con có ít hơn bố ${d} cái. Hỏi con có bao nhiêu cái?`; }
-                break;
-            }
-            case "4_2": { let ms=r(5,9), ts=r(2,4), tot=r(5,12)*ms; if(r(0,1)){ v.push((tot/ms)*ts); q=`Lớp có ${tot} bạn, ${ts}/${ms} là nữ. Hỏi có bao nhiêu nữ?`; } else { v.push(tot-(tot/ms)*ts); q=`Dây dài ${tot}m, cắt đi ${ts}/${ms}. Hỏi còn lại bao nhiêu mét?`; } break; }
-            case "4_3": { let t=r(1,3); if(t===1){ let tan=r(1,5), kg=r(10,99); v.push(tan*1000+kg); q=`${tan} tấn ${kg} kg = ... kg?`; } else if(t===2){ let m2=r(3,8), dm2=r(5,50); v.push(m2*100+dm2); q=`${m2} m² ${dm2} dm² = ... dm²?`; } else { let y=r(1800,2024); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy?`; } break; }
-            case "4_4": { let pb=1, pl=r(2,5), g=r(6,15); if(r(0,1)){ v.push(g*pl); q=`Tổng là ${g*(pb+pl)}. Số lớn gấp ${pl} lần số bé. Tìm số LỚN?`; } else { v.push(g*pb); q=`Hiệu là ${g*(pl-pb)}. Số lớn gấp ${pl} lần số bé. Tìm số BÉ?`; } break; }
-            
-            // CẬP NHẬT GÓC & HÌNH HỌC LỚP 4
-            case "4_5": { 
-                const ag = [
-                    {q:"Góc có số đo 90 độ là góc gì?", a:["vuông", "góc vuông"]},
-                    {q:"Góc nhỏ hơn góc vuông là góc gì?", a:["nhọn", "góc nhọn"]},
-                    {q:"Góc lớn hơn góc vuông và nhỏ hơn góc bẹt là góc gì?", a:["tù", "góc tù"]},
-                    {q:"Lúc 3 giờ đúng, kim giờ và kim phút tạo thành góc gì?", a:["vuông", "góc vuông"]},
-                    {q:"Lúc 6 giờ đúng, kim giờ và kim phút tạo thành góc gì?", a:["bẹt", "góc bẹt"]},
-                    {q:"Hình chữ nhật có mấy góc vuông?", a:["4"]},
-                    {q:"Góc bẹt bằng bao nhiêu độ?", a:["180", "180 độ"]}
-                ];
-                let c = ag[r(0, ag.length-1)]; q = c.q; v = c.a; break; 
-            }
-            
-            // PHÂN SỐ ĐA DẠNG (+ - x : )
-            case "4_6": { 
-                let op = r(1,4); let m1 = r(2,5), t1 = r(1,5), m2 = r(2,5), t2 = r(1,5); 
-                let tkq, mkq, s;
-                if(op===1){ tkq=t1*m2+t2*m1; mkq=m1*m2; s="+"; }
-                else if(op===2){ 
-                    if(t1/m1 < t2/m2){ let tx=t1; t1=t2; t2=tx; let mx=m1; m1=m2; m2=mx; } // Đảm bảo số lớn trừ số bé
-                    tkq=t1*m2-t2*m1; mkq=m1*m2; s="-"; 
-                }
-                else if(op===3){ tkq=t1*t2; mkq=m1*m2; s="x"; }
-                else { tkq=t1*m2; mkq=m1*t2; s=":"; }
-                
-                q = `Tính: ${t1}/${m1} ${s} ${t2}/${m2} = ?`;
-                let g = gcd(tkq, mkq); 
-                if(mkq/g === 1) v.push((tkq/g).toString()); else v.push(`${tkq/g}/${mkq/g}`);
-                v.push(`${tkq}/${mkq}`); // Chấp nhận cả chưa rút gọn
-                document.getElementById('formatHint').innerText = "VD: 3/4 hoặc 1";
-                break; 
-            }
-            
-            case "4_7": { let n=r(11,99); if(r(0,1)){ v=["0","5"]; q=`Số ${n}* chia hết cho 5 thì * là chữ số nào?`; } else { v=[((9-(n%9))%9).toString()]; q=`Số ${n}* chia hết cho 9 thì * là chữ số nào?`; } break; }
-            case "4_8": { let y=r(1800,2026); v.push(Math.ceil(y/100)); q=`Năm ${y} thuộc thế kỷ thứ mấy?`; break; }
+          // --- KHỐI 3 ---
+          case "3_1": {
+              let a3 = r(11, 99), b3 = r(2, 5);
+              if (r(0,1)) { v.push(a3*b3); q=`${a3} x ${b3} = ?`; }
+              else { v.push(a3); q=`${a3*b3} : ${b3} = ?`; }
+              break;
+          }
+          case "3_3": {
+              let d3=r(5,15), r3=r(2,10); if(d3<=r3) d3 = r3+2;
+              if(r(0,1)) { v.push((d3+r3)*2); q=`Hình chữ nhật có dài ${d3}cm, rộng ${r3}cm. Tính CHU VI? (cm)`; currentHint="Chu vi hình chữ nhật = (Dài + Rộng) x 2";}
+              else { v.push(d3*r3); q=`Hình chữ nhật có dài ${d3}cm, rộng ${r3}cm. Tính DIỆN TÍCH? (cm²)`; currentHint="Diện tích hình chữ nhật = Dài x Rộng"; }
+              document.getElementById('formatHint').innerText = "Chỉ gõ số kết quả";
+              break;
+          }
+          case "3_5": {
+              let a3_5=r(5,20), b3_5=r(2,5), c3_5=r(2,5);
+              if(r(0,1)) { v.push(a3_5 + b3_5*c3_5); q=`Tính giá trị biểu thức: ${a3_5} + ${b3_5} x ${c3_5} = ?`; }
+              else { v.push(a3_5*b3_5 - c3_5); q=`Tính giá trị biểu thức: ${a3_5} x ${b3_5} - ${c3_5} = ?`; }
+              currentHint = "Nhớ quy tắc vàng: Nhân chia trước, cộng trừ sau nhé!";
+              break;
+          }
+          case "3_6": {
+              let b = r(2, 5), x_plus_a = r(10, 20), a = r(2, 9);
+              let x = x_plus_a - a;
+              let c = x_plus_a * b;
+              v.push(x); q = `Tìm x biết: (x + ${a}) x ${b} = ${c}`;
+              currentHint = `Đầu tiên tìm (x + ${a}) = ${c} : ${b}. Sau đó tìm x = kết quả vừa tìm được - ${a}.`;
+              break;
+          }
+          case "3_7": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let m = r(2, 9), cm = r(5, 95);
+                  v.push(m * 100 + cm); q = `Đổi đơn vị: ${m}m ${cm}cm = ... cm?`;
+                  currentHint = `1m = 100cm. Hãy lấy ${m} x 100 rồi cộng thêm ${cm}.`;
+              } else {
+                  let kg = r(1, 5), g = r(50, 950);
+                  v.push(kg * 1000 + g); q = `Đổi đơn vị: ${kg}kg ${g}g = ... g?`;
+                  currentHint = `1kg = 1000g. Hãy lấy ${kg} x 1000 rồi cộng thêm ${g}.`;
+              }
+              break;
+          }
 
-            // LỚP 5
-            case "5_1": { let a=r(1,9), b=r(1,9); v.push(((a+b)/10).toFixed(1)); q=`Tính: 0,${a} + 0,${b} = ?`; break; }
-            case "5_2": { let n=r(4,10)*50, p=r(1,4)*10; if(r(0,1)){ v.push(n*p/100); q=`Tìm ${p}% của ${n}?`; } else { v.push(n); q=`Tìm một số biết ${p}% của nó là ${n*p/100}?`; } break; }
-            case "5_3": { let sp=r(30,60), t=r(2,4); v.push(sp*t); q=`Xe máy đi ${sp}km/h trong ${t} giờ. Quãng đường là bao nhiêu km?`; break; }
-            case "5_4": { let d1=r(10,20), d2=r(5,12), h=r(8,12); v.push((d1+d2)*h/2); q=`Hình thang hai đáy ${d1}cm, ${d2}cm, cao ${h}cm. Diện tích?`; break; }
-            case "5_5": { let m3=r(2,5); v.push(m3*1000); q=`Bể có thể tích ${m3}m³. Hỏi bể chứa được bao nhiêu LÍT nước? (1m³=1000L)`; break; }
-            case "5_6": { let h=r(2,5), p=r(10,40); v.push(`${h+1} giờ ${p} phút`); q=`Tính: ${h} giờ ${p} phút + 1 giờ = ?`; break; }
+          // --- KHỐI 4 ---
+          case "4_1": { 
+              let t=r(20,80), d=r(2,20); if((t+d)%2!==0) t++; 
+              v.push((t+d)/2); q=`Tổng hai số là ${t}, số này hơn số kia ${d} đơn vị. Số lớn là bao nhiêu?`; 
+              currentHint = "Công thức Tìm số lớn: (Tổng + Hiệu) : 2";
+              break; 
+          }
+          case "4_3": {
+              if (r(0,1)) {
+                  let kg = r(1,9), g = r(10, 99);
+                  v.push(kg*1000 + g); q=`Đổi: ${kg} kg ${g} g = ... g?`; currentHint="1 kg = 1000 g. Hãy nhân 1000 rồi cộng thêm số g lẻ.";
+              } else {
+                  let m2 = r(2,10);
+                  v.push(m2*100); q=`Đổi: ${m2} m² = ... dm²?`; currentHint="1 m² = 100 dm².";
+              }
+              break;
+          }
+          case "4_4": {
+              let p1=r(1,4), p2=r(5,9); let part = r(2,5); 
+              v.push(p2 * part); q=`Tổng hai số là ${(p1+p2)*part}. Tỉ số của chúng là ${p1}/${p2}. Tìm số lớn?`; 
+              currentHint=`Tổng số phần bằng nhau = ${p1} + ${p2} = ${p1+p2}. \nGiá trị 1 phần = Tổng : Tổng số phần. \nSố lớn = Giá trị 1 phần x ${p2}.`;
+              break;
+          }
+          case "4_6": { 
+              let m=r(2,5), t1=r(1,5), t2=r(1,5); 
+              v.push(`${t1+t2}/${m}`); 
+              let g=gcd(t1+t2,m); 
+              if(g>1) v.push(m/g===1?`${(t1+t2)/g}`:`${(t1+t2)/g}/${m/g}`); 
+              q=`Tính: ${t1}/${m} + ${t2}/${m} = ?`; 
+              document.getElementById('formatHint').innerText = "Gõ dưới dạng phân số (VD: 3/4). Nhớ rút gọn nếu có thể.";
+              break; 
+          }
+          case "4_7": {
+              let a = r(10, 50), b = r(10, 50), c = r(10, 50);
+              while ((a + b + c) % 3 !== 0) {
+                  c = r(10, 50);
+              }
+              v.push((a + b + c) / 3); q = `Tìm số trung bình cộng của ba số: ${a}, ${b} và ${c}?`;
+              currentHint = `Tìm trung bình cộng bằng cách tính tổng ba số rồi chia cho 3: (a + b + c) : 3.`;
+              break;
+          }
+          case "4_8": {
+              let a = r(1, 4), c = r(6, 9);
+              v.push(`${c - a}/5`);
+              q = `Tìm x biết: x + ${a}/5 = ${c}/5`;
+              document.getElementById('formatHint').innerText = "Gõ dưới dạng phân số tối giản (VD: 3/5).";
+              currentHint = `x = ${c}/5 - ${a}/5 = (${c} - ${a})/5.`;
+              break;
+          }
 
-            default: { q="Lỗi ID, hãy chọn lại khối lớp!"; v=["error"]; }
-        }
+          // --- KHỐI 5 ---
+          case "5_1": { 
+              let a=r(1,9), b=r(1,9); 
+              if (r(0,1)) { v.push((a+b)/10); q=`Tính: 0,${a} + 0,${b} = ?`; }
+              else { v.push((a*b)/100); q=`Tính: 0,${a} x 0,${b} = ?`; currentHint="Nhân như số tự nhiên, sau đó đếm tổng phần thập phân để phẩy."; }
+              document.getElementById('formatHint').innerText = "Dùng dấu phẩy (,) cho số thập phân.";
+              break; 
+          }
+          case "5_2": {
+              let pct = r(1,9)*10, num = r(1,10)*10;
+              v.push((pct*num)/100); q=`Tìm ${pct}% của ${num}?`; 
+              currentHint=`Lấy ${num} chia cho 100 rồi nhân với ${pct}.`;
+              break;
+          }
+          case "5_3": { 
+              let sp=r(30,60), t=r(2,4); 
+              v.push(sp*t); q=`Một ô tô đi với vận tốc ${sp}km/h trong ${t} giờ. Hỏi quãng đường ô tô đi được là bao nhiêu km?`; 
+              currentHint="Quãng đường (S) = Vận tốc (v) x Thời gian (t).";
+              break; 
+          }
+          case "5_4": {
+              if (r(0,1)) {
+                  let r5 = r(2,5);
+                  v.push(r5*r5*3.14); q=`Tính diện tích hình tròn có bán kính r = ${r5}cm? (cm²)`; 
+                  currentHint="Diện tích hình tròn (S) = r x r x 3,14";
+              } else {
+                  let dl=r(10,20), db=r(5,9), h=r(4,8);
+                  v.push(((dl+db)*h)/2); q=`Hình thang có đáy lớn ${dl}cm, đáy bé ${db}cm, chiều cao ${h}cm. Tính diện tích? (cm²)`;
+                  currentHint="Diện tích hình thang = (Đáy lớn + Đáy bé) x Chiều cao : 2";
+              }
+              document.getElementById('formatHint').innerText = "Chỉ gõ số, dùng dấu phẩy nếu là thập phân.";
+              break;
+          }
+          case "5_6": {
+              let type = r(1, 4);
+              if (type === 1) { 
+                  let u = ["cm", "dm", "m"][r(0, 2)]; let c = r(2, 6);
+                  v.push(c*c*c); q = `Một hình lập phương có cạnh dài ${c}${u}. Tính thể tích của nó?`;
+                  currentHint = `Thể tích (V) = Cạnh x Cạnh x Cạnh.`;
+              } 
+              else if (type === 2) { 
+                  let d = r(6, 10), r_w = r(3, 5), h = r(4, 8);
+                  v.push(d * r_w * h); q = `Hình hộp chữ nhật dài ${d}cm, rộng ${r_w}cm, cao ${h}cm. Thể tích là bao nhiêu cm³?`;
+                  currentHint = "Thể tích (V) = Dài x Rộng x Cao.";
+              }
+              else if (type === 3) {
+                  let d = r(2, 4), r_w = 2, h = 1;
+                  v.push(d * r_w * h * 1000); q = `Bể nước có dài ${d}m, rộng ${r_w}m, cao ${h}m. Bể đó chứa đầy được bao nhiêu LÍT nước?`;
+                  currentHint = "1m³ = 1000 lít. Tính thể tích (m³) rồi nhân 1000.";
+              }
+              else {
+                  let m3 = r(1, 5); v.push(m3 * 1000); q = `Điền số: ${m3} m³ = ... dm³?`;
+                  currentHint = "1m³ = 1000 dm³.";
+              }
+              break;
+          }
+          case "5_7": {
+              let x = r(2, 5);
+              let a = r(1, 9) + r(1, 9)/10;
+              let c = x * a;
+              v.push(x); q = `Tìm x biết: x x ${a.toFixed(1).replace('.', ',')} = ${c.toFixed(1).replace('.', ',')}`;
+              document.getElementById('formatHint').innerText = "Dùng dấu phẩy cho số thập phân nếu cần.";
+              currentHint = `Tìm x = ${c.toFixed(1).replace('.', ',')} : ${a.toFixed(1).replace('.', ',')}.`;
+              break;
+          }
+          case "5_8": {
+              let h1 = r(1, 5), m1 = r(10, 50);
+              let h2 = r(1, 5), m2 = r(10, 50);
+              let totalMin = m1 + m2;
+              let finalH = h1 + h2 + Math.floor(totalMin/60);
+              v.push(finalH);
+              q = `Một người đi từ A lúc ${h1} giờ ${m1} phút và đi hết ${h2} giờ ${m2} phút. Người đó đến B lúc mấy giờ? (Chỉ trả lời phần giờ)`;
+              currentHint = `Hãy cộng số giờ với số giờ, số phút với số phút. 60 phút thì đổi thành 1 giờ nhé.`;
+              break;
+          }
 
-        currentAnswers = v.map(String).map(s => s.trim().toLowerCase());
-        document.getElementById('question').innerText = q;
-        document.getElementById('answer').value = "";
-        document.getElementById('message').innerText = "";
-        document.getElementById('answer').focus();
-    }
+          // --- KHỐI 6 ---
+          case "6_1": {
+              let type = r(1, 3);
+              if (type === 1) {
+                  let a = r(5, 30), b = r(5, 30);
+                  v.push(-a + b); q = `Tính: (-${a}) + ${b} = ?`;
+                  currentHint = `Quy tắc cộng số nguyên khác dấu: hiệu hai phần tự nhiên, lấy dấu của số có phần tự nhiên lớn hơn.`;
+              } else if (type === 2) {
+                  let a = r(2, 12), b = r(2, 12);
+                  v.push(-a * b); q = `Tính: (-${a}) x ${b} = ?`;
+                  currentHint = `Tích của hai số nguyên khác dấu luôn là một số nguyên âm.`;
+              } else {
+                  let a = r(2, 5), b = r(2, 4);
+                  v.push(Math.pow(a, b)); q = `Tính lũy thừa: ${a}<sup>${b}</sup> = ?`;
+                  currentHint = `${a}<sup>${b}</sup> là tích của ${b} thừa số ${a}.`;
+              }
+              break;
+          }
+          case "6_2": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let common = r(2, 6);
+                  let a = r(2, 6) * common, b = r(2, 6) * common;
+                  while (a === b) b = r(2, 6) * common;
+                  let ans = gcd(a, b);
+                  v.push(ans); q = `Tìm ước chung lớn nhất UCLN(${a}, ${b}) = ?`;
+                  currentHint = `UCLN của ${a} và ${b} là số lớn nhất mà cả hai đều chia hết.`;
+              } else {
+                  let a = [4, 6, 8, 9, 10, 12][r(0, 5)];
+                  let b = [5, 6, 8, 9, 10, 12][r(0, 5)];
+                  while (a === b) b = [5, 6, 8, 9, 10, 12][r(0, 5)];
+                  let ans = (a * b) / gcd(a, b);
+                  v.push(ans); q = `Tìm bội chung nhỏ nhất BCNN(${a}, ${b}) = ?`;
+                  currentHint = `BCNN của ${a} và ${b} là số nhỏ nhất chia hết cho cả hai số.`;
+              }
+              break;
+          }
+          case "6_3": {
+              let common = r(2, 15);
+              let num = r(1, 9) * common, den = r(2, 9) * common;
+              while (num === den) den = r(2, 9) * common;
+              let g = gcd(num, den);
+              let simplifiedNum = num / g;
+              let simplifiedDen = den / g;
+              v.push(simplifiedDen === 1 ? `${simplifiedNum}` : `${simplifiedNum}/${simplifiedDen}`);
+              q = `Rút gọn phân số sau về tối giản: ${num}/${den} = ?`;
+              document.getElementById('formatHint').innerText = "Gõ dạng số (VD: 5) hoặc phân số (VD: 3/4).";
+              currentHint = `Chia cả tử số ${num} và mẫu số ${den} cho ước chung lớn nhất UCLN là ${g}.`;
+              break;
+          }
+          case "6_4": {
+              let a = r(10, 30), b = r(-5, 5), c = r(5, 15);
+              let x = a - c - b;
+              v.push(x); q = `Tìm số nguyên x biết: ${a} - (x + ${b < 0 ? '(' + b + ')' : b}) = ${c}`;
+              currentHint = `Tính (x + b) = ${a} - ${c}. Sau đó tìm x.`;
+              break;
+          }
+          case "6_5": {
+              let pct = [10, 20, 25, 50][r(0, 3)];
+              let b = r(5, 50);
+              let x = (b * 100) / pct;
+              v.push(x); q = `Tìm một số biết ${pct}% của số đó là ${b}?`;
+              currentHint = `Số cần tìm = ${b} : ${pct} x 100.`;
+              break;
+          }
 
-    function check() {
-        let raw = document.getElementById('answer').value.trim().toLowerCase().replace(',', '.');
-        if (!raw) return;
-        let isCorrect = currentAnswers.some(ans => {
-            let a = ans.replace(',', '.');
-            return raw === a || raw.replace(/\s/g,'') === a.replace(/\s/g,'');
-        });
-        
-        let time = Math.round((Date.now() - questionStartTime)/1000);
-        if (!isQuestionAttempted) {
-            totalQuestions++; isQuestionAttempted = true;
-            if (isCorrect) { correctQuestions++; if(errorTracker[currentTypeId]>0) errorTracker[currentTypeId]--; }
-            else { errorTracker[currentTypeId] = (errorTracker[currentTypeId] || 0) + 1; }
-        }
+          // --- KHỐI 7 ---
+          case "7_1": {
+              let a = r(2, 10), b = r(2, 10), c = r(2, 10);
+              let val = (a * b) / c;
+              while (val % 1 !== 0) {
+                  a = r(2, 10); b = r(2, 10); c = r(2, 10);
+                  val = (a * b) / c;
+              }
+              v.push(val); q = `Tìm x biết tỉ lệ thức: x/${a} = ${b}/${c}`;
+              currentHint = `Nhân chéo chia ngang: x = (${a} x ${b}) : ${c}.`;
+              break;
+          }
+          case "7_2": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let a = r(2, 15);
+                  v.push(a); q = `Tính căn bậc hai: √${a*a} = ?`;
+                  currentHint = `Căn bậc hai số học của ${a*a} là số không âm mà bình phương lên bằng ${a*a}.`;
+              } else {
+                  let a = r(2, 10);
+                  v.push(a*a); q = `Tìm số thực x dương biết: √x = ${a}`;
+                  currentHint = `Bình phương hai vế lên: x = ${a}² = ${a} x ${a}.`;
+              }
+              break;
+          }
+          case "7_3": {
+              let a = r(30, 100), b = r(30, 70);
+              while (a + b >= 170) {
+                  a = r(30, 100); b = r(30, 70);
+              }
+              v.push(180 - (a + b)); q = `Trong tam giác ABC, góc A = ${a}°, góc B = ${b}°. Tính số đo góc C? (độ)`;
+              document.getElementById('formatHint').innerText = "Chỉ gõ số.";
+              currentHint = `Tổng ba góc trong một tam giác luôn bằng 180°. Góc C = 180° - (Góc A + Góc B).`;
+              break;
+          }
+          case "7_4": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let items1 = r(2, 5), price1 = r(10, 50) * 1000;
+                  let items2 = items1 * 2;
+                  v.push(price1 * 2);
+                  q = `Biết ${items1} mét vải giá ${price1} đồng. Hỏi ${items2} mét vải cùng loại giá bao nhiêu đồng?`;
+                  currentHint = `Tỉ lệ thuận: Số mét vải tăng gấp đôi thì giá tiền cũng tăng gấp đôi.`;
+              } else {
+                  let workers1 = r(2, 4), days1 = r(6, 12);
+                  let workers2 = workers1 * 2;
+                  v.push(days1 / 2);
+                  q = `Biết ${workers1} người làm xong một công việc trong ${days1} ngày. Hỏi ${workers2} người (với cùng năng suất) làm xong công việc đó trong mấy ngày?`;
+                  currentHint = `Tỉ lệ nghịch: Số người tăng gấp đôi thì thời gian hoàn thành giảm đi một nửa.`;
+              }
+              break;
+          }
+          case "7_5": {
+              let a = r(1, 3), b = r(-3, 3), c = r(-5, 5);
+              let x = r(-2, 2);
+              let val = a*x*x + b*x + c;
+              v.push(val);
+              q = `Tính giá trị của đa thức P(x) = ${a}x² ${b < 0 ? '-' : '+'} ${Math.abs(b)}x ${c < 0 ? '-' : '+'} ${Math.abs(c)} tại x = ${x}`;
+              currentHint = `Thay x = ${x} vào đa thức: P(${x}) = ${a}.(${x})² + ${b}.(${x}) + ${c}.`;
+              break;
+          }
 
-        if (isCorrect) {
-            document.getElementById('message').innerText = `Chính xác! 🎉 (${time} giây)`;
-            document.getElementById('message').className = "success"; score += 10; updateScoreBoard();
-            if (score >= 100 && !hasReceivedFlower) {
-                hasReceivedFlower = true;
-                document.getElementById('rewardTimeText').innerText = `Thời gian hoàn thành: ${formatTime(totalSeconds)}`;
-                document.getElementById('rewardScreen').style.display = "flex";
-            } else { setTimeout(newQuestion, 2000); }
-        } else {
-            document.getElementById('message').innerText = "Chưa đúng rồi, Lâm cố lên! 👇";
-            document.getElementById('message').className = "error";
-            document.getElementById('explanationBox').innerHTML = `💡 <strong>Gợi ý:</strong> Hãy đọc kỹ đề, nháp cẩn thận và kiểm tra đơn vị nhé Lâm!`;
-            document.getElementById('explanationBox').style.display = "block";
-            document.getElementById('actionButtons').innerHTML = `<button class="btn-retry" onclick="retryQuestion()">Thử lại câu này 🔄</button><button class="btn-next" onclick="newQuestion()">Bỏ qua ⏭️</button>`;
-        }
-    }
+          // --- KHỐI 8 ---
+          case "8_1": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let a = r(2, 10);
+                  v.push(2*a); q = `Trong khai triển hằng đẳng thức (x + ${a})² = x² + Bx + ${a*a}, giá trị của hệ số B là bao nhiêu?`;
+                  currentHint = `Hằng đẳng thức: (x + a)² = x² + 2ax + a². So sánh ta có B = 2a.`;
+              } else {
+                  let ab = r(2, 10);
+                  let a2b2 = r(15, 50);
+                  v.push(a2b2 + 2*ab); q = `Cho a² + b² = ${a2b2} và ab = ${ab}. Tính giá trị của biểu thức P = (a + b)² ?`;
+                  currentHint = `Khai triển: (a + b)² = a² + b² + 2ab. Thay số vào ta có P = ${a2b2} + 2 x ${ab}.`;
+              }
+              break;
+          }
+          case "8_2": {
+              let a = r(2, 9), b = r(-15, 15);
+              while (b === 0) b = r(-15, 15);
+              let x = r(-10, 10);
+              let c = a*x + b;
+              v.push(x); q = `Giải phương trình: ${a}x ${b < 0 ? '-' : '+'} ${Math.abs(b)} = ${c}. Tìm x?`;
+              currentHint = `Chuyển vế đổi dấu: ${a}x = ${c} - (${b}). Sau đó chia cả 2 vế cho ${a}.`;
+              break;
+          }
+          case "8_3": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let choices = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [9, 12, 15], [8, 15, 17]];
+                  let pair = choices[r(0, choices.length-1)];
+                  v.push(pair[2]); q = `Tam giác vuông có độ dài hai cạnh góc vuông là ${pair[0]}cm và ${pair[1]}cm. Tính độ dài cạnh huyền? (cm)`;
+                  currentHint = `Định lý Pythagore: Cạnh huyền = √(Cạnh₁² + Cạnh₂²).`;
+              } else {
+                  let choices = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [9, 12, 15]];
+                  let pair = choices[r(0, choices.length-1)];
+                  v.push(pair[0]); q = `Tam giác vuông có cạnh huyền dài ${pair[2]}cm, một cạnh góc vuông dài ${pair[1]}cm. Cạnh góc vuông còn lại dài bao nhiêu? (cm)`;
+                  currentHint = `Định lý Pythagore: Cạnh còn lại = √(Cạnh huyền² - Cạnh đã biết²).`;
+              }
+              break;
+          }
+          case "8_4": {
+              let a = r(2, 9);
+              let x = a + r(2, 5);
+              let ans = x + a;
+              v.push(ans);
+              q = `Tính giá trị của phân thức P = (x² - ${a*a}) / (x - ${a}) khi x = ${x}?`;
+              currentHint = `Rút gọn phân thức: (x² - a²) / (x - a) = (x - a)(x + a) / (x - a) = x + a. Thay x = ${x} vào ta được ${x} + ${a}.`;
+              break;
+          }
+          case "8_5": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let d1 = r(6, 12), d2 = r(4, 10);
+                  while ((d1 * d2) % 2 !== 0) d2 = r(4, 10);
+                  v.push((d1 * d2)/2); q = `Tính diện tích hình thoi có độ dài hai đường chéo là ${d1}cm và ${d2}cm? (cm²)`;
+                  currentHint = `Diện tích hình thoi bằng nửa tích hai đường chéo: S = (d₁ x d₂) : 2.`;
+              } else {
+                  let a = r(5, 15), h = r(4, 10);
+                  v.push(a * h); q = `Tính diện tích hình bình hành có độ dài cạnh đáy là ${a}cm và chiều cao tương ứng là ${h}cm? (cm²)`;
+                  currentHint = `Diện tích hình bình hành bằng độ dài đáy nhân với chiều cao tương ứng: S = a x h.`;
+              }
+              break;
+          }
 
-    async function captureScoreForZalo() {
-        const canvas = document.createElement('canvas'); canvas.width = 550; canvas.height = 250;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#f0f8ff'; ctx.fillRect(0,0,550,250);
-        ctx.strokeStyle = '#0056b3'; ctx.lineWidth = 5; ctx.strokeRect(5,5,540,240);
-        ctx.font = 'bold 28px Arial'; ctx.fillStyle = '#0056b3'; ctx.fillText('📊 KẾT QUẢ HỌC TẬP XUÂN LÂM', 40, 60);
-        ctx.font = '22px Arial'; ctx.fillStyle = '#333';
-        ctx.fillText(`🎯 Tỉ lệ đúng: ${correctQuestions}/${totalQuestions} bài`, 40, 110);
-        ctx.fillText(`⏱️ Tổng thời gian: ${formatTime(totalSeconds)}`, 40, 150);
-        ctx.font = 'bold 32px Arial'; ctx.fillStyle = '#28a745';
-        ctx.fillText(`🏆 TỔNG ĐIỂM: ${score}`, 40, 210);
-        canvas.toBlob(blob => {
-            const item = new ClipboardItem({ 'image/png': blob });
-            navigator.clipboard.write([item]).then(() => alert('Đã chụp và copy ảnh! Hãy Paste (Ctrl+V) vào Zalo nhé.')).catch(() => window.open(canvas.toDataURL(), '_blank'));
-        });
-    }
+          // --- KHỐI 9 ---
+          case "9_1": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let a = r(2, 8);
+                  let b = a * r(2, 5) * r(2, 5);
+                  let ans = Math.sqrt(a * b);
+                  while (ans % 1 !== 0) {
+                      a = r(2, 8);
+                      b = a * r(2, 5) * r(2, 5);
+                      ans = Math.sqrt(a * b);
+                  }
+                  v.push(ans); q = `Tính giá trị của căn thức: √${a} x √${b} = ?`;
+                  currentHint = `Áp dụng công thức: √A x √B = √(A x B). Tính căn bậc hai của tích đó.`;
+              } else {
+                  let a = r(2, 10);
+                  let b = r(2, 5);
+                  v.push(a * b); q = `Rút gọn căn thức sau: √(${a*a} x ${b*b}) = ?`;
+                  currentHint = `Áp dụng công thức: √(A² x B²) = A x B (với A, B dương).`;
+              }
+              break;
+          }
+          case "9_2": {
+              let x = r(-5, 10), y = r(-5, 10);
+              let a1 = r(1, 3), b1 = r(1, 2);
+              let c1 = a1*x + b1*y;
+              let a2 = r(1, 2), b2 = r(-2, -1);
+              let c2 = a2*x + b2*y;
+              let askX = r(0, 1);
+              v.push(askX ? x : y);
+              q = `Giải hệ phương trình:<br>{ ${a1}x ${b1 < 0 ? '-' : '+'} ${Math.abs(b1)}y = ${c1}<br>{ ${a2}x ${b2 < 0 ? '-' : '+'} ${Math.abs(b2)}y = ${c2}<br>Tìm giá trị của ${askX ? 'x' : 'y'}?`;
+              currentHint = `Sử dụng phương pháp cộng đại số hoặc phương pháp thế để khử một ẩn đi.`;
+              break;
+          }
+          case "9_3": {
+              let x1 = r(-5, 5), x2 = r(-5, 5);
+              while (x1 === 0 || x2 === 0) { x1 = r(-5, 5); x2 = r(-5, 5); }
+              let sum = x1 + x2;
+              let prod = x1 * x2;
+              let eq = `x² ${sum < 0 ? '+' : '-'} ${Math.abs(sum)}x ${prod < 0 ? '-' : '+'} ${Math.abs(prod)} = 0`;
+              let type = r(1, 2);
+              if (type === 1) {
+                  v.push(sum); q = `Không giải phương trình, hãy tính tổng hai nghiệm (x₁ + x₂) của phương trình bậc hai: ${eq}`;
+                  currentHint = `Theo định lý Vi-ét: Tổng hai nghiệm S = x₁ + x₂ = -b/a.`;
+              } else {
+                  v.push(prod); q = `Không giải phương trình, hãy tính tích hai nghiệm (x₁ . x₂) của phương trình bậc hai: ${eq}`;
+                  currentHint = `Theo định lý Vi-ét: Tích hai nghiệm P = x₁ . x₂ = c/a.`;
+              }
+              break;
+          }
+          case "9_4": {
+              let central = r(40, 150);
+              while (central % 2 !== 0) central = r(40, 150);
+              let type = r(1, 2);
+              if (type === 1) {
+                  v.push(central / 2); q = `Cho đường tròn (O), góc ở tâm AOB = ${central}°. Số đo của góc nội tiếp ACB chắn cung AB là bao nhiêu độ?`;
+                  currentHint = `Góc nội tiếp bằng nửa số đo của góc ở tâm cùng chắn một cung: góc nội tiếp = góc ở tâm : 2.`;
+              } else {
+                  let inscribed = r(20, 80);
+                  v.push(inscribed * 2); q = `Cho đường tròn (O), góc nội tiếp ACB chắn cung AB có số đo bằng ${inscribed}°. Số đo góc ở tâm AOB bằng bao nhiêu độ?`;
+                  currentHint = `Góc ở tâm bằng hai lần số đo góc nội tiếp cùng chắn một cung: góc ở tâm = góc nội tiếp x 2.`;
+              }
+              break;
+          }
+          case "9_5": {
+              let a = r(2, 4), c = r(-3, -1);
+              let x = r(-3, 3);
+              let b = r(-5, 5);
+              let d = (a - c)*x + b;
+              v.push(x);
+              q = `Tìm hoành độ giao điểm x của hai đường thẳng (d₁): y = ${a}x ${b < 0 ? '-' : '+'} ${Math.abs(b)} và (d₂): y = ${c === -1 ? '-' : (c === 1 ? '' : c)}x ${d < 0 ? '-' : '+'} ${Math.abs(d)}?`;
+              currentHint = `Cho hai vế phải bằng nhau: ${a}x + (${b}) = ${c}x + (${d}), giải tìm x.`;
+              break;
+          }
 
-    function closeReward() { document.getElementById('rewardScreen').style.display = 'none'; newQuestion(); }
-    function retryQuestion() { document.getElementById('answer').value = ""; document.getElementById('message').innerText = ""; document.getElementById('explanationBox').style.display = "none"; document.getElementById('answer').focus(); questionStartTime = Date.now(); }
+          // --- KHỐI 10 ---
+          case "10_1": {
+              let a = r(1, 5), b = a + r(3, 6);
+              let c = r(2, 6), d = c + r(3, 6);
+              let setA = new Set(), setB = new Set();
+              for(let i=a; i<=b; i++) setA.add(i);
+              for(let i=c; i<=d; i++) setB.add(i);
+              
+              let type = r(1, 2);
+              if (type === 1) {
+                  let intersection = [...setA].filter(x => setB.has(x));
+                  v.push(intersection.length);
+                  q = `Cho tập hợp A gồm các số nguyên từ ${a} đến ${b}, tập hợp B gồm các số nguyên từ ${c} đến ${d}. Hỏi tập hợp giao (A ∩ B) có bao nhiêu phần tử?`;
+                  currentHint = `Giao (A ∩ B) gồm các phần tử vừa thuộc A vừa thuộc B. Hãy tìm số chung.`;
+              } else {
+                  let union = new Set([...setA, ...setB]);
+                  v.push(union.size);
+                  q = `Cho tập hợp A gồm các số nguyên từ ${a} đến ${b}, tập hợp B gồm các số nguyên từ ${c} đến ${d}. Hỏi tập hợp hợp (A ∪ B) có bao nhiêu phần tử?`;
+                  currentHint = `Hợp (A ∪ B) gồm tất cả các phần tử thuộc ít nhất một trong hai tập hợp (không đếm trùng lặp).`;
+              }
+              break;
+          }
+          case "10_2": {
+              let x_vertex = r(-5, 5);
+              let a = [1, -1, 2, -2][r(0, 3)];
+              let b = -2 * a * x_vertex;
+              let c = r(-5, 5);
+              v.push(x_vertex);
+              q = `Tìm hoành độ đỉnh I (x_I) của parabol (P): y = ${a === 1 ? '' : (a === -1 ? '-' : a)}x² ${b < 0 ? '-' : '+'} ${Math.abs(b)}x ${c < 0 ? '-' : '+'} ${Math.abs(c)}`;
+              currentHint = `Hoành độ đỉnh parabol được tính bằng công thức: x_I = -b / (2a).`;
+              break;
+          }
+          case "10_3": {
+              let u1 = r(-5, 5), u2 = r(-5, 5);
+              let v1 = r(-5, 5), v2 = r(-5, 5);
+              let prod = u1*v1 + u2*v2;
+              v.push(prod);
+              q = `Cho hai vectơ u⃗ = (${u1}; ${u2}) và v⃗ = (${v1}; ${v2}). Tính tích vô hướng u⃗ . v⃗ = ?`;
+              currentHint = `Tích vô hướng hai vectơ: u⃗ . v⃗ = u₁ . v₁ + u₂ . v₂.`;
+              break;
+          }
+          case "10_4": {
+              let a = r(1, 10), b = r(2, 6);
+              let x = b*b - a;
+              v.push(x); q = `Giải phương trình: √(${x + a >= 0 ? 'x + ' + a : 'x - ' + Math.abs(a)}) = ${b}. Tìm x?`;
+              currentHint = `Bình phương hai vế: x + a = ${b}² = ${b*b}. Suy ra x = ${b*b} - a.`;
+              break;
+          }
+          case "10_5": {
+              let b = 3, c = 8, angle = 60, a = 7;
+              v.push(a); q = `Cho tam giác ABC có cạnh b = ${b}, c = ${c} và góc A = ${angle}°. Tính độ dài cạnh a?`;
+              currentHint = `Định lý Côsin: a² = b² + c² - 2bc.cos(A). Với cos(60°) = 0,5.`;
+              break;
+          }
 
-    window.onload = () => { loadTypes(); startGlobalTimer(); };
-    document.getElementById('answer').addEventListener('keypress', e => { if(e.key==='Enter') check(); });
+          // --- KHỐI 11 ---
+          case "11_1": {
+              let choices = [[3, 5, 4], [5, 13, 12], [8, 17, 15]];
+              let choice = choices[r(0, choices.length-1)];
+              let sin_num = choice[0], sin_den = choice[1], cos_num = choice[2];
+              v.push(`${cos_num}/${sin_den}`);
+              q = `Cho góc nhọn x có sin(x) = ${sin_num}/${sin_den}. Tính giá trị của cos(x) ?`;
+              document.getElementById('formatHint').innerText = "Gõ dạng phân số (VD: 4/5).";
+              currentHint = `Áp dụng công thức lượng giác cơ bản: sin²(x) + cos²(x) = 1. Với góc nhọn thì cos(x) > 0.`;
+              break;
+          }
+          case "11_2": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let u1 = r(1, 10), d = r(2, 5), n = r(4, 10);
+                  v.push(u1 + (n-1)*d);
+                  q = `Cho cấp số cộng (u_n) có số hạng đầu u₁ = ${u1} và công sai d = ${d}. Tìm số hạng thứ u_(${n}) ?`;
+                  currentHint = `Công thức số hạng tổng quát của cấp số cộng: u_n = u₁ + (n - 1) . d.`;
+              } else {
+                  let u1 = r(1, 3), q_ratio = 2, n = r(3, 6);
+                  v.push(u1 * Math.pow(q_ratio, n-1));
+                  q = `Cho cấp số nhân (u_n) có số hạng đầu u₁ = ${u1} và công bội q = ${q_ratio}. Tìm số hạng thứ u_(${n}) ?`;
+                  currentHint = `Công thức số hạng tổng quát của cấp số nhân: u_n = u₁ . q^(n - 1).`;
+              }
+              break;
+          }
+          case "11_3": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let n = r(4, 8), k = r(2, n-1);
+                  const factorial = (num) => num <= 1 ? 1 : num * factorial(num-1);
+                  let ans = factorial(n) / (factorial(k) * factorial(n-k));
+                  v.push(ans);
+                  q = `Tính số tổ hợp chập ${k} của ${n} phần tử: C_${n}<sup>${k}</sup> = ?`;
+                  currentHint = `Công thức tổ hợp: C_n^k = n! / [k! . (n - k)!].`;
+              } else {
+                  let red = r(3, 8), blue = r(3, 8);
+                  let total = red + blue;
+                  const select2 = (num) => (num * (num-1)) / 2;
+                  let favorable = select2(red);
+                  let allCases = select2(total);
+                  let g = gcd(favorable, allCases);
+                  let simplifiedNum = favorable / g;
+                  let simplifiedDen = allCases / g;
+                  v.push(simplifiedDen === 1 ? `${simplifiedNum}` : `${simplifiedNum}/${simplifiedDen}`);
+                  q = `Một hộp chứa ${red} quả cầu đỏ và ${blue} quả cầu xanh. Lấy ngẫu nhiên đồng thời 2 quả cầu. Tính xác suất lấy được 2 quả cầu CÙNG MÀU ĐỎ?`;
+                  document.getElementById('formatHint').innerText = "Gõ dạng phân số (VD: 3/10).";
+                  currentHint = `Số cách chọn 2 quả đỏ là C_${red}² = ${favorable}. Tổng số cách chọn 2 quả bất kỳ là C_${total}² = ${allCases}. Xác suất P = Favorable / AllCases.`;
+              }
+              break;
+          }
+          case "11_4": {
+              let a = r(2, 6);
+              v.push(2*a);
+              q = `Tính giới hạn: L = lim<sub>x → ${a}</sub> (x² - ${a*a}) / (x - ${a}) = ?`;
+              currentHint = `Rút gọn phân thức trước khi thế số: (x² - a²) / (x - a) = x + a. Giới hạn bằng a + a = 2a.`;
+              break;
+          }
+          case "11_5": {
+              let n = r(2, 4);
+              let a = r(1, 3);
+              let ans = n * Math.pow(a, n-1);
+              v.push(ans);
+              q = `Cho hàm số f(x) = x<sup>${n}</sup>. Tính đạo hàm f'(${a}) ?`;
+              currentHint = `Công thức đạo hàm: (x^n)' = n . x^(n-1). Thay x = ${a} vào kết quả đạo hàm.`;
+              break;
+          }
+
+          // --- KHỐI 12 ---
+          case "12_1": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let a = r(1, 5), b = r(1, 5), c = r(1, 3), d = c * r(-4, 4);
+                  while (d === 0) d = c * r(-4, 4);
+                  let x_asymptote = d / c;
+                  v.push(x_asymptote);
+                  q = `Tìm tiệm cận đứng của đồ thị hàm số: y = (${a}x + ${b}) / (${c === 1 ? '' : c}x ${d < 0 ? '+' : '-'} ${Math.abs(d)})`;
+                  document.getElementById('formatHint').innerText = "Chỉ gõ giá trị x (ví dụ: 2)";
+                  currentHint = `Tiệm cận đứng của hàm phân thức là nghiệm của mẫu số: ${c}x - ${d} = 0.`;
+              } else {
+                  let a = r(1, 3);
+                  let c = r(-5, 5);
+                  v.push(2);
+                  q = `Hàm số bậc ba y = x³ - ${3*a}x² ${c < 0 ? '-' : '+'} ${Math.abs(c)} có bao nhiêu điểm cực trị?`;
+                  currentHint = `Đạo hàm y' = 3x² - ${6*a}x = 0 có hai nghiệm phân biệt x = 0 và x = ${2*a}. Do đó hàm số luôn có 2 cực trị.`;
+              }
+              break;
+          }
+          case "12_2": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let a = [2, 3, 5][r(0, 2)];
+                  let exp = r(2, 4);
+                  let b = Math.pow(a, exp);
+                  v.push(exp);
+                  q = `Tính giá trị của biểu thức logarit: log_${a}(${b}) = ?`;
+                  currentHint = `log_a(a^k) = k. Hãy viết ${b} dưới dạng lũy thừa của ${a}.`;
+              } else {
+                  let a = [2, 3, 5][r(0, 2)];
+                  let b = r(2, 3);
+                  v.push(Math.pow(a, b));
+                  q = `Giải phương trình logarit: log_${a}(x) = ${b}. Tìm x?`;
+                  currentHint = `Định nghĩa logarit: log_a(x) = b <=> x = a^b.`;
+              }
+              break;
+          }
+          case "12_3": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let k = r(2, 6);
+                  while (k % 2 !== 0) k = r(2, 6);
+                  let a = r(1, 4);
+                  v.push((k/2) * a * a);
+                  q = `Tính tích phân tích phân I = ∫₀<sup>${a}</sup> (${k}x) dx = ?`;
+                  currentHint = `Nguyên hàm của ${k}x là ${(k/2)}x². Thế cận từ 0 đến ${a}: ${(k/2)} . ${a}² - 0.`;
+              } else {
+                  let n = r(2, 5);
+                  v.push(n+1);
+                  q = `Nếu F(x) là một nguyên hàm của f(x) = x<sup>${n}</sup> thì bậc của lũy thừa x trong F(x) là bao nhiêu?`;
+                  currentHint = `Công thức nguyên hàm: ∫x^n dx = (x^(n+1)) / (n+1) + C. Bậc tăng lên 1 đơn vị.`;
+              }
+              break;
+          }
+          case "12_4": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  let a = r(-5, 5), b = r(-5, 5);
+                  while (b === 0) b = r(-5, 5);
+                  let askReal = r(0, 1);
+                  v.push(askReal ? a : b);
+                  q = `Cho số phức z = ${a} ${b < 0 ? '-' : '+'} ${Math.abs(b)}i. Hãy tìm phần ${askReal ? 'thực' : 'ảo'} của số phức z?`;
+                  currentHint = `Số phức z = a + bi có phần thực là a, phần ảo là b (không bao gồm i).`;
+              } else {
+                  let choices = [[3, 4, 12, 13], [3, 4, 0, 5], [1, 2, 2, 3]];
+                  let choice = choices[r(0, choices.length-1)];
+                  let a = choice[0], b = choice[1], c = choice[2], d_div = choice[3];
+                  let d = d_div * r(1, 3);
+                  v.push(d / d_div);
+                  q = `Trong không gian Oxyz, tính khoảng cách từ gốc tọa độ O(0;0;0) đến mặt phẳng (P): ${a}x + ${b}y ${c === 0 ? '' : '+ ' + c + 'z'} + ${d} = 0 ?`;
+                  currentHint = `Công thức khoảng cách từ M(x₀,y₀,z₀) đến Ax+By+Cz+D=0 là: d = |Ax₀ + By₀ + Cz₀ + D| / √(A² + B² + C²).`;
+              }
+              break;
+          }
+          case "12_5": {
+              let choices = [[2, 3, 6, 7], [1, 2, 2, 3], [2, 4, 4, 6], [2, 6, 9, 11]];
+              let pair = choices[r(0, choices.length-1)];
+              v.push(pair[3]);
+              q = `Trong không gian Oxyz, tính độ dài (môđun) của vectơ u⃗ = (${pair[0]}; ${pair[1]}; ${pair[2]})?`;
+              currentHint = `Công thức độ dài vectơ: |u⃗| = √(x² + y² + z²).`;
+              break;
+          }
+          case "12_6": {
+              let type = r(1, 2);
+              if (type === 1) {
+                  v.push(4); q = `Tìm giá trị nhỏ nhất (GTNN) của hàm số y = x² - 2x + 5 trên đoạn [0; 2]?`;
+                  currentHint = `Đỉnh của parabol là x = 1 (thuộc đoạn [0; 2]). Giá trị nhỏ nhất đạt được tại đỉnh: y(1) = 1² - 2(1) + 5 = 4.`;
+              } else {
+                  v.push(5); q = `Tìm giá trị lớn nhất (GTLN) của hàm số y = -x² + 4x + 1 trên đoạn [0; 3]?`;
+                  currentHint = `Đỉnh của parabol là x = 2 (thuộc đoạn [0; 3]). Giá trị lớn nhất đạt được tại đỉnh: y(2) = -(2²) + 4(2) + 1 = 5.`;
+              }
+              break;
+          }
+          default: { q="Lỗi tải đề. Hãy chọn dạng bài khác!"; v=["error"]; }
+      }
+
+      currentAnswers = v.map(String).map(s => s.trim().toLowerCase());
+      document.getElementById('question').innerHTML = q;
+      answerInput.value = "";
+      document.getElementById('message').innerText = "";
+      answerInput.focus();
+  }
+
+  function check() {
+      let inputEl = document.getElementById('answer');
+      let raw = inputEl.value.trim().toLowerCase().replace(',', '.'); // Chuẩn hóa dấu phẩy thập phân
+      if (!raw) {
+          inputEl.focus();
+          return;
+      }
+
+      let isCorrect = currentAnswers.some(ans => raw === ans.replace(',', '.') || raw.replace(/\s/g,'') === ans.replace(/\s/g,'').replace(',','.'));
+      let time = Math.round((Date.now() - questionStartTime)/1000);
+      let msgEl = document.getElementById('message');
+      
+      if (!isQuestionAttempted) {
+          totalQuestions++; isQuestionAttempted = true;
+          if (isCorrect) { correctQuestions++; if(errorTracker[currentTypeId]>0) errorTracker[currentTypeId]--; }
+          else { errorTracker[currentTypeId] = (errorTracker[currentTypeId] || 0) + 1; }
+      }
+
+      if (isCorrect) {
+          msgEl.innerHTML = `<span class="text-success-600">Hoàn hảo! 🎉 (+10 điểm) <span class="text-xs text-slate-400">(${time}s)</span></span>`;
+          inputEl.classList.add('border-success-400', 'bg-success-50');
+          inputEl.classList.remove('border-rose-400', 'bg-rose-50');
+          score += 10; 
+          updateScoreBoard();
+          
+          if (score >= 100 && !hasReceivedFlower) {
+              hasReceivedFlower = true;
+              document.getElementById('rewardTimeText').innerText = `Hoàn thành trong: ${formatTime(totalSeconds)}`;
+              document.getElementById('rewardScreen').classList.remove('hidden');
+              document.getElementById('rewardScreen').classList.add('flex');
+              fireConfetti();
+          } else { 
+              setTimeout(newQuestion, 1500); 
+          }
+      } else {
+          msgEl.innerHTML = `<span class="text-rose-500">Chưa chính xác rồi! Con xem lại nhé 👇</span>`;
+          inputEl.classList.add('border-rose-400', 'bg-rose-50');
+          inputEl.classList.remove('border-success-400', 'bg-success-50');
+          
+          // Shake effect
+          let qc = document.getElementById('questionContainer');
+          qc.classList.remove('shake');
+          void qc.offsetWidth; // trigger reflow
+          qc.classList.add('shake');
+
+          // Show Hint
+          document.getElementById('explanationText').innerText = currentHint;
+          document.getElementById('explanationBox').classList.remove("hidden");
+          
+          // Change buttons
+          document.getElementById('actionButtons').innerHTML = btnRetryHtml + btnNextHtml;
+      }
+  }
+
+  function fireConfetti() {
+      var duration = 3000;
+      var end = Date.now() + duration;
+      (function frame() {
+          confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'] });
+          confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'] });
+          if (Date.now() < end) requestAnimationFrame(frame);
+      }());
+  }
+
+  function drawScoreCanvas() {
+      const canvas = document.createElement('canvas'); 
+      canvas.width = 600; canvas.height = 320;
+      const ctx = canvas.getContext('2d');
+      
+      // Draw background
+      let grd = ctx.createLinearGradient(0, 0, 600, 320);
+      grd.addColorStop(0, "#eff6ff"); grd.addColorStop(1, "#dbeafe");
+      ctx.fillStyle = grd; ctx.fillRect(0,0,600,320);
+      
+      // Draw border
+      ctx.strokeStyle = '#3b82f6'; ctx.lineWidth = 10; ctx.strokeRect(5,5,590,310);
+      
+      // Texts
+      ctx.textAlign = "center";
+      
+      // Title
+      ctx.font = '900 32px Nunito, Arial'; ctx.fillStyle = '#1d4ed8'; 
+      ctx.fillText('🏆 BẢNG VÀNG XUÂN LÂM 🏆', 300, 55);
+      
+      // Timestamp
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      ctx.font = 'bold 14px Arial'; ctx.fillStyle = '#64748b'; 
+      ctx.fillText(`Thời gian: ${timeStr} - ${dateStr}`, 300, 95);
+      
+      // Details
+      ctx.font = 'bold 24px Arial'; ctx.fillStyle = '#334155'; 
+      ctx.fillText(`🎯 Tỉ lệ đúng: ${correctQuestions} / ${totalQuestions} bài`, 300, 155);
+      ctx.fillText(`⏱️ Thời gian ôn luyện: ${formatTime(totalSeconds)}`, 300, 205);
+      
+      // Score
+      ctx.font = '900 40px Arial'; ctx.fillStyle = '#10b981'; 
+      ctx.fillText(`Điểm số: ${score} Điểm`, 300, 275);
+
+      return canvas;
+  }
+
+  async function captureScoreForZalo() {
+      const canvas = drawScoreCanvas();
+      canvas.toBlob(blob => {
+          const item = new ClipboardItem({ 'image/png': blob });
+          navigator.clipboard.write([item])
+              .then(() => alert('🎉 Đã chụp xong! Con mở Zalo và dán (Paste) để gửi cho Ba nhé!'))
+              .catch(() => window.open(canvas.toDataURL(), '_blank'));
+      });
+  }
+
+  function downloadScoreImage() {
+      const canvas = drawScoreCanvas();
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = `BangVang_XuanLam_${score}diem.png`;
+      link.href = dataUrl;
+      link.click();
+  }
+
+  function closeReward() { 
+      document.getElementById('rewardScreen').classList.add('hidden'); 
+      document.getElementById('rewardScreen').classList.remove('flex'); 
+      newQuestion(); 
+  }
+  
+  function retryQuestion() { 
+      document.getElementById('answer').value = ""; 
+      document.getElementById('answer').classList.remove('border-rose-400', 'bg-rose-50');
+      document.getElementById('message').innerText = ""; 
+      document.getElementById('actionButtons').innerHTML = btnCheckHtml + btnNextHtml;
+      document.getElementById('answer').focus(); 
+      questionStartTime = Date.now(); 
+  }
+
+  // Init
+  window.onload = () => { loadTypes(); startGlobalTimer(); };
+  document.getElementById('answer').addEventListener('keypress', e => { if(e.key==='Enter') check(); });
+
 </script>
 </body>
 </html>
