@@ -151,7 +151,10 @@
       </div>
 
       <!-- Answer Input -->
-      <div class="flex flex-col items-center gap-4">
+      <div class="flex flex-col items-center gap-4 w-full">
+        <!-- Start Button Container -->
+        <div id="startContainer" class="w-full flex justify-center"></div>
+
         <input type="text" id="answer" placeholder="Gõ đáp án vào đây..." autocomplete="off" class="w-full max-w-sm text-center text-3xl font-black text-brand-700 placeholder-slate-300 bg-slate-50 border-4 border-slate-200 rounded-2xl py-4 focus:outline-none focus:border-brand-500 focus:bg-white transition-all shadow-inner">
         
         <!-- Feedback Message -->
@@ -694,15 +697,56 @@
       loadTypes();
   }
 
+  let isSessionStarted = false;
+
   function loadGrades() {
       loadTypes();
+  }
+
+  function showStartScreen() {
+      document.getElementById('question').innerHTML = "Sẵn sàng chưa? Hãy bấm nút Bắt đầu để làm bài ôn luyện! 🌟";
+      document.getElementById('formatHint').innerText = "";
+      
+      // Show start button
+      document.getElementById('startContainer').innerHTML = `<button class="bg-success-500 hover:bg-success-600 text-white font-black text-xl px-12 py-4 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 w-full max-w-sm" onclick="startSession()">Bắt đầu làm bài 🚀</button>`;
+      document.getElementById('startContainer').classList.remove('hidden');
+      
+      // Hide active play controls
+      document.getElementById('answer').classList.add('hidden');
+      document.getElementById('message').classList.add('hidden');
+      document.getElementById('actionButtons').classList.add('hidden');
+      document.getElementById('explanationBox').classList.add("hidden");
+  }
+
+  function startSession() {
+      isSessionStarted = true;
+      
+      // Hide start button
+      document.getElementById('startContainer').classList.add('hidden');
+      document.getElementById('startContainer').innerHTML = "";
+      
+      // Show active play controls
+      document.getElementById('answer').classList.remove('hidden');
+      document.getElementById('message').classList.remove('hidden');
+      document.getElementById('actionButtons').classList.remove('hidden');
+      
+      document.getElementById('answer').disabled = false;
+      document.getElementById('answer').placeholder = "Gõ đáp án vào đây...";
+      document.getElementById('answer').focus();
+      
+      startGlobalTimer();
+      newQuestion();
   }
 
   function loadTypes() {
       const s = document.getElementById('subject').value;
       const g = document.getElementById('grade').value;
       document.getElementById('type').innerHTML = dataConfig[s][g].map(i => `<option value="${i.id}">${i.n}</option>`).join('');
-      newQuestion();
+      if (isSessionStarted) {
+          newQuestion();
+      } else {
+          showStartScreen();
+      }
   }
 
   // Define buttons globally for reuse
@@ -1672,7 +1716,7 @@
   }
 
   // Init
-  window.onload = () => { updateSubjectsDropdown(); startGlobalTimer(); };
+  window.onload = () => { updateSubjectsDropdown(); };
   document.getElementById('answer').addEventListener('keypress', e => { if(e.key==='Enter') check(); });
 
 </script>
