@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Siêu Trợ Lý Toán Học - Xuân Lâm V20.0 🚀</title>
+  <title>Trợ Lý Học Tập - Xuân Lâm V20.0 🚀</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
@@ -74,7 +74,7 @@
       <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
       <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
       
-      <h1 class="text-3xl font-black mb-2 relative z-10 drop-shadow-md">Siêu Trợ Lý Toán Học</h1>
+      <h1 class="text-3xl font-black mb-2 relative z-10 drop-shadow-md">Trợ Lý Học Tập</h1>
       <p class="text-brand-100 font-bold tracking-wider uppercase text-sm relative z-10">Bản Đặc Quyền Xuân Lâm V20.0</p>
       
       <!-- Progress Bar -->
@@ -125,7 +125,7 @@
           <option value="english">🇬🇧 Tiếng Anh</option>
           <option value="science">🔬 Khoa Học & Đời Sống</option>
         </select>
-        <select id="grade" onchange="loadTypes()" class="flex-1 bg-slate-50 border-2 border-slate-200 text-slate-700 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition-all appearance-none cursor-pointer">
+        <select id="grade" onchange="updateSubjectsDropdown()" class="flex-1 bg-slate-50 border-2 border-slate-200 text-slate-700 font-bold rounded-xl px-4 py-3 focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100 transition-all appearance-none cursor-pointer">
           <option value="1">🎓 Lớp 1</option>
           <option value="2">🎓 Lớp 2</option>
           <option value="3">🎓 Lớp 3</option>
@@ -229,6 +229,42 @@
           "10": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🪐 Cơ học & Chuyển động Trái Đất", id:"sci_10_1"} ],
           "11": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🧪 Phản ứng hóa học & Kim loại", id:"sci_11_1"} ],
           "12": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🔬 Vật lý lượng tử & Danh nhân Khoa học", id:"sci_12_1"} ]
+      },
+      "physics": {
+          "6": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"📏 Đo độ dài, thể tích, khối lượng", id:"phy_6_1"} ],
+          "7": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🕯️ Ánh sáng (Phản xạ & Khúc xạ)", id:"phy_7_1"} ],
+          "8": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚙️ Lực, ma sát & Áp suất", id:"phy_8_1"} ],
+          "9": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚡ Điện học & Định luật Ohm", id:"phy_9_1"} ],
+          "10": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🚗 Động học (Vận tốc, Rơi tự do)", id:"phy_10_1"} ],
+          "11": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚡ Điện tích & Dòng điện không đổi", id:"phy_11_1"} ],
+          "12": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🌀 Dao động & Sóng cơ học", id:"phy_12_1"} ]
+      },
+      "chemistry": {
+          "8": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚛️ Nguyên tử, Phân tử khối", id:"chm_8_1"} ],
+          "9": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🧪 Hợp chất vô cơ & pH", id:"chm_9_1"} ],
+          "10": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚛️ Lớp vỏ electron & Liên kết hóa học", id:"chm_10_1"} ],
+          "11": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🧪 Sự điện li & Hóa học hữu cơ", id:"chm_11_1"} ],
+          "12": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🍬 Este, Cacbohidrat & Polime", id:"chm_12_1"} ]
+      },
+      "biology": {
+          "6": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🌿 Sinh học thực vật & Quang hợp", id:"bio_6_1"} ],
+          "7": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🐶 Động vật có/không xương sống", id:"bio_7_1"} ],
+          "8": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🫁 Hệ cơ quan trên cơ thể người", id:"bio_8_1"} ],
+          "9": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🧬 Quy luật di truyền của Mendel", id:"bio_9_1"} ],
+          "10": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🔬 Sinh học tế bào & Bào quan", id:"bio_10_1"} ],
+          "11": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🌱 Sinh lý thực vật & Hướng sáng", id:"bio_11_1"} ],
+          "12": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🔬 Thuyết tiến hóa Darwin", id:"bio_12_1"} ]
+      },
+      "history": {
+          "4": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"👑 Buổi đầu dựng nước (Hùng Vương...)", id:"his_4_1"} ],
+          "5": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"📜 Chống thực dân Pháp cận đại", id:"his_5_1"} ],
+          "6": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🌍 Lịch sử thế giới cổ đại", id:"his_6_1"} ],
+          "7": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚔️ Triều đại Lý, Trần, Lê sơ", id:"his_7_1"} ],
+          "8": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🌍 Cách mạng tư sản & Phong trào Cần Vương", id:"his_8_1"} ],
+          "9": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"⚔️ Lịch sử Việt Nam hiện đại (1919-1975)", id:"his_9_1"} ],
+          "10": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🎨 Văn minh sông Hồng & Đông Sơn", id:"his_10_1"} ],
+          "11": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🌍 Chiến tranh thế giới thứ 1 & 2", id:"his_11_1"} ],
+          "12": [ {n:"🎲 Trộn tất cả", id:"all"}, {n:"🇻🇳 Lịch sử Việt Nam từ 1919 đến nay", id:"his_12_1"} ]
       }
   };
 
@@ -435,6 +471,129 @@
     ]
   };
 
+  const physicsData = {
+    "phy_6_1": [
+      { q: "Đơn vị đo khối lượng hợp pháp của Việt Nam là gì? (Kí hiệu viết tắt)", a: ["kg"], h: "Kilôgam." },
+      { q: "Dụng cụ dùng để đo lực là gì?", a: ["lực kế", "luc ke"], h: "Bắt đầu bằng chữ 'lực'." }
+    ],
+    "phy_7_1": [
+      { q: "Ảnh của một vật tạo bởi gương phẳng có độ lớn như thế nào so với vật? (lớn hơn / nhỏ hơn / bằng)", a: ["bằng", "bang"], h: "Gương phẳng cho ảnh ảo bằng vật." },
+      { q: "Góc phản xạ như thế nào so với góc tới? (lớn hơn / nhỏ hơn / bằng)", a: ["bằng", "bang"], h: "Định luật phản xạ ánh sáng: i' = i." }
+    ],
+    "phy_8_1": [
+      { q: "Đơn vị của áp suất là gì? (Kí hiệu viết tắt hoặc tên)", a: ["pa", "pascal"], h: "Pascal." },
+      { q: "Khi đi trên sàn đá hoa mới lau dễ bị ngã do lực ma sát nào bị giảm? (ma sát trượt / ma sát lăn / ma sát nghỉ)", a: ["ma sát trượt", "ma sat truot"], h: "Lực ma sát cản trở chuyển động trượt giảm đi do nước trơn trượt." }
+    ],
+    "phy_9_1": [
+      { q: "Hệ thức của Định luật Ohm là I = ? (dùng U và R)", a: ["u/r", "u : r"], h: "Cường độ dòng điện tỉ lệ thuận với hiệu điện thế và tỉ lệ nghịch với điện trở." },
+      { q: "Cho hai điện trở R1 = 5 Ohm, R2 = 10 Ohm mắc NỐI TIẾP. Điện trở tương đương của mạch là bao nhiêu Ohm?", a: ["15"], h: "Mắc nối tiếp: R = R1 + R2." }
+    ],
+    "phy_10_1": [
+      { q: "Gia tốc rơi tự do thường được lấy giá trị xấp xỉ bằng bao nhiêu m/s²?", a: ["10", "9.8", "9,8"], h: "Thường lấy g = 9.8 hoặc 10." },
+      { q: "Một xe máy đi được quãng đường 60km trong 1,5 giờ. Vận tốc trung bình của xe là bao nhiêu km/h?", a: ["40"], h: "v = s / t = 60 / 1.5." }
+    ],
+    "phy_11_1": [
+      { q: "Đơn vị của điện tích là gì? (Kí hiệu viết tắt)", a: ["c", "coulomb"], h: "Cu-lông." },
+      { q: "Hạt mang điện tích âm trong nguyên tử là hạt nào?", a: ["electron", "ê-lec-trôn", "êlectrôn"], h: "Hạt chuyển động xung quanh hạt nhân." }
+    ],
+    "phy_12_1": [
+      { q: "Chu kỳ dao động T và tần số f liên hệ với nhau qua công thức nào? (f = ...)", a: ["1/t"], h: "Tần số là nghịch đảo của chu kỳ." },
+      { q: "Vận tốc truyền sóng phụ thuộc chủ yếu vào yếu tố nào? (chu kỳ / tần số / môi trường truyền sóng)", a: ["môi trường truyền sóng", "moi truong truyen song", "môi trường", "moi truong"], h: "Tùy thuộc bản chất của môi trường đàn hồi (rắn, lỏng, khí)." }
+    ]
+  };
+
+  const chemistryData = {
+    "chm_8_1": [
+      { q: "Ký hiệu hóa học của nguyên tố Sodium (Natri) là gì?", a: ["na"], h: "Natri." },
+      { q: "Tính phân tử khối của Nước (H2O)? (Cho H=1, O=16)", a: ["18"], h: "M = 1 x 2 + 16." },
+      { q: "Ký hiệu hóa học của nguyên tố Đồng (Copper) là gì?", a: ["cu"], h: "Cuprum." }
+    ],
+    "chm_9_1": [
+      { q: "Axit clohiđric có công thức hóa học là gì?", a: ["hcl"], h: "Hydro và Clo." },
+      { q: "Độ pH của một dung dịch axit luôn như thế nào so với 7? (< 7 / > 7 / = 7)", a: ["< 7", "nho hon 7", "bé hơn 7"], h: "Axit có pH nhỏ hơn 7, bazơ lớn hơn 7." }
+    ],
+    "chm_10_1": [
+      { q: "Lớp electron thứ nhất (sát hạt nhân nhất) chứa tối đa bao nhiêu electron?", a: ["2"], h: "Phân lớp 1s²." },
+      { q: "Phản ứng hóa học có sự thay đổi số oxi hóa của các nguyên tố gọi là phản ứng gì?", a: ["oxi hóa khử", "oxi hóa - khử", "oxi hoa khu"], h: "Phản ứng oxi hóa - khử." }
+    ],
+    "chm_11_1": [
+      { q: "Chất khí hữu cơ đơn giản nhất thuộc dãy đồng đẳng Ankan có công thức CH4 tên là gì?", a: ["metan", "methane"], h: "Mê-tan." },
+      { q: "Dung dịch chất nào sau đây làm quỳ tím hóa đỏ: HCl hay NaOH?", a: ["hcl"], h: "Axit làm quỳ tím hóa đỏ." }
+    ],
+    "chm_12_1": [
+      { q: "Kim loại dẫn điện tốt nhất trong các kim loại sau: Cu, Al, Ag, Fe?", a: ["ag", "bạc", "bac"], h: "Bạc dẫn điện tốt nhất, sau đó đến đồng (Cu)." },
+      { q: "Công thức hóa học của Glucozơ là gì?", a: ["c6h12o6"], h: "C_6_H_12_O_6." }
+    ]
+  };
+
+  const biologyData = {
+    "bio_6_1": [
+      { q: "Cây xanh chế tạo chất hữu cơ nhờ quá trình gì dưới ánh sáng Mặt Trời?", a: ["quang hợp", "quang hop"], h: "Quang hợp lấy CO2 giải phóng O2." },
+      { q: "Nấm có chứa chất diệp lục để tự quang hợp không? (có / không)", a: ["không", "khong"], h: "Nấm sống dị dưỡng ký sinh hoặc hoại sinh." }
+    ],
+    "bio_7_1": [
+      { q: "Động vật nào sau đây thuộc nhóm không xương sống: giun đất, cá chép, chim bồ câu?", a: ["giun đất", "giun dat"], h: "Giun đất không có cột sống." },
+      { q: "Động vật nào sau đây thuộc lớp Thú: cá voi, cá mập, cá chép?", a: ["cá voi", "ca voi"], h: "Cá voi đẻ con và nuôi con bằng sữa mẹ." }
+    ],
+    "bio_8_1": [
+      { q: "Nhóm máu nào được gọi là nhóm máu chuyên cho (có thể truyền cho mọi nhóm máu khác)?", a: ["o", "nhóm máu o", "nhom mau o"], h: "Nhóm máu O không có kháng nguyên trên hồng cầu." },
+      { q: "Cơ quan nào trong hệ tiêu hóa của người đảm nhận chức năng hấp thụ chất dinh dưỡng chủ yếu?", a: ["ruột non", "ruot non"], h: "Nơi có các lông cực nhỏ để hấp thụ chất dinh dưỡng." }
+    ],
+    "bio_9_1": [
+      { q: "Nhà khoa học được coi là ông tổ của ngành Di truyền học là ai?", a: ["men-đen", "menden", "mendel", "gregor mendel"], h: "Người lai các giống đậu Hà Lan." },
+      { q: "Một phân tử ADN mạch kép có Nu loại A = 20%. Tỉ lệ Nu loại T là bao nhiêu phần trăm?", a: ["20", "20%"], h: "Theo nguyên tắc bổ sung: A = T." }
+    ],
+    "bio_10_1": [
+      { q: "Bào quan nào được ví là 'nhà máy năng lượng' của tế bào nhân thực?", a: ["ti thể", "ti the", "mitochondria"], h: "Nơi hô hấp tế bào tạo ATP." },
+      { q: "Virut có cấu tạo tế bào hoàn chỉnh chưa? (có / chưa)", a: ["chưa", "chua", "chưa có", "chua co"], h: "Virut chỉ gồm lõi axit nucleic và vỏ protein." }
+    ],
+    "bio_11_1": [
+      { q: "Hiện tượng cây hướng về phía nguồn ánh sáng được gọi là gì?", a: ["hướng sáng", "huong sang", "hướng động", "huong dong"], h: "Tính hướng sáng của thực vật." }
+    ],
+    "bio_12_1": [
+      { q: "Ai là tác giả của tác phẩm nổi tiếng 'Nguồn gốc các loài' nêu thuyết tiến hóa chọn lọc tự nhiên?", a: ["đác-uyn", "dac uyn", "darwin", "charles darwin"], h: "Nhà sinh học người Anh." },
+      { q: "Đơn vị cấu trúc cơ bản của hệ sinh thái gồm quần xã sinh vật và sinh cảnh gọi là gì?", a: ["hệ sinh thái", "he sinh thai"], h: "Hệ sinh thái." }
+    ]
+  };
+
+  const historyData = {
+    "his_4_1": [
+      { q: "Triều đại Hùng Vương truyền được bao nhiêu đời vua Hùng?", a: ["18", "mười tám"], h: "Con số 18 đời vua Hùng Vương dựng nước." },
+      { q: "Kinh đô đầu tiên của nhà nước Văn Lang nước ta tên là gì?", a: ["phong châu", "phong chau"], h: "Nằm ở tỉnh Phú Thọ ngày nay." }
+    ],
+    "his_5_1": [
+      { q: "Ai được phong là 'Bình Tây Đại Nguyên Soái' trong cuộc kháng chiến chống Pháp ở Nam Kì?", a: ["trương định", "truong dinh"], h: "Một danh tướng nghĩa khí ở Gò Công." },
+      { q: "Ai là người dâng bản 'Điều trần' canh tân đất nước lên vua Tự Đức?", a: ["nguyễn trường tộ", "nguyen truong to"], h: "Nhà cải cách công giáo quê Nghệ An." }
+    ],
+    "his_6_1": [
+      { q: "Kỳ quan cổ đại 'Kim tự tháp Giza' là thành tựu của nền văn minh cổ đại nào?", a: ["ai cập", "ai cap"], h: "Nằm bên dòng sông Nile." },
+      { q: "Quê hương của Thế vận hội Olympic cổ đại ở quốc gia cổ đại nào?", a: ["hy lạp", "hy lap", "lạp"], h: "Đất nước của các vị thần trên đỉnh Olympus." }
+    ],
+    "his_7_1": [
+      { q: "Ai là vị vua đầu tiên của triều đại nhà Lý?", a: ["lý thái tổ", "lý công uẩn", "ly thai to", "ly cong uan"], h: "Người dời đô từ Hoa Lư về Thăng Long năm 1010." },
+      { q: "Ba lần kháng chiến chống quân Nguyên - Mông thắng lợi lẫy lừng diễn ra ở triều đại nào?", a: ["trần", "nhà trần", "tran", "nha tran"], h: "Gắn liền với các vị vua Trần và Hưng Đạo Vương Trần Quốc Tuấn." }
+    ],
+    "his_8_1": [
+      { q: "Cuộc cách mạng tư sản đầu tiên trên thế giới nổ ra ở nước nào?", a: ["hà lan", "ha lan"], h: "Nước Hà Lan vào thế kỷ XVI." },
+      { q: "Vị vua nào của triều Nguyễn đã ban chiếu Cần Vương kêu gọi nhân dân giúp vua cứu nước?", a: ["hàm nghi", "ham nghi"], h: "Vị vua trẻ yêu nước bị thực dân Pháp lưu đày." }
+    ],
+    "his_9_1": [
+      { q: "Chiến thắng Điện Biên Phủ 'lừng lẫy năm châu, chấn động địa cầu' diễn ra vào năm nào?", a: ["1954"], h: "Chấm dứt chiến tranh xâm lược của thực dân Pháp." },
+      { q: "Tổng tư lệnh chiến dịch Điện Biên Phủ năm 1954 là vị đại tướng nào?", a: ["võ nguyên giáp", "vo nguyen giap"], h: "Người anh cả của Quân đội Nhân dân Việt Nam." }
+    ],
+    "his_10_1": [
+      { q: "Trống đồng Đông Sơn là biểu tượng của nền văn minh cổ nào ở Việt Nam?", a: ["đông sơn", "dong son", "văn minh đông sơn"], h: "Giai đoạn văn hóa đồ đồng phát triển rực rỡ ở Bắc Bộ." }
+    ],
+    "his_11_1": [
+      { q: "Chiến tranh thế giới thế hai kết thúc vào năm nào?", a: ["1945"], h: "Năm phát xít Nhật, Đức đầu hàng đồng minh." },
+      { q: "Sự kiện lịch sử nào mở đầu cho thời kỳ cận đại của thế giới vào năm 1789?", a: ["cách mạng pháp", "cach mang phap", "cách mạng tư sản pháp"], h: "Sự sụp đổ của ngục Bastille ở nước Pháp." }
+    ],
+    "his_12_1": [
+      { q: "Đảng Cộng sản Việt Nam được thành lập vào ngày tháng năm nào? (Gõ dạng DD/MM/YYYY)", a: ["03/02/1930", "3/2/1930"], h: "Hội nghị thành lập Đảng tại Cửu Long, Hương Cảng, Trung Quốc." },
+      { q: "Ngày giải phóng miền Nam thống nhất đất nước là ngày tháng nào hàng năm? (Gõ dạng DD/MM)", a: ["30/04", "30/4"], h: "Ngày xe tăng tiến vào Dinh Độc Lập." }
+    ]
+  };
+
   let currentAnswers = [], currentHint = "", currentTypeId = "";
   let score = 0, totalQuestions = 0, correctQuestions = 0;
   let isQuestionAttempted = false, hasReceivedFlower = false, errorTracker = {}; 
@@ -463,6 +622,76 @@
           let s = (totalSeconds % 60).toString().padStart(2, '0');
           document.getElementById('timeText').innerText = `${m}:${s}`;
       }, 1000);
+  }
+
+  const subjectsConfig = {
+      "primary_low": [
+          { val: "math", txt: "🧮 Toán Học" },
+          { val: "vietnamese", txt: "🇻🇳 Tiếng Việt" },
+          { val: "english", txt: "🇬🇧 Tiếng Anh" },
+          { val: "science", txt: "🔬 Khoa Học & Đời Sống" }
+      ],
+      "primary_high": [
+          { val: "math", txt: "🧮 Toán Học" },
+          { val: "vietnamese", txt: "🇻🇳 Tiếng Việt" },
+          { val: "english", txt: "🇬🇧 Tiếng Anh" },
+          { val: "science", txt: "🔬 Khoa Học & Đời Sống" },
+          { val: "history", txt: "📜 Lịch Sử" }
+      ],
+      "junior_low": [
+          { val: "math", txt: "🧮 Toán Học" },
+          { val: "vietnamese", txt: "🇻🇳 Ngữ Văn" },
+          { val: "english", txt: "🇬🇧 Tiếng Anh" },
+          { val: "physics", txt: "💡 Vật Lý" },
+          { val: "biology", txt: "🌿 Sinh Học" },
+          { val: "history", txt: "📜 Lịch Sử" }
+      ],
+      "junior_high": [
+          { val: "math", txt: "🧮 Toán Học" },
+          { val: "vietnamese", txt: "🇻🇳 Ngữ Văn" },
+          { val: "english", txt: "🇬🇧 Tiếng Anh" },
+          { val: "physics", txt: "💡 Vật Lý" },
+          { val: "chemistry", txt: "🧪 Hóa Học" },
+          { val: "biology", txt: "🌿 Sinh Học" },
+          { val: "history", txt: "📜 Lịch Sử" }
+      ],
+      "senior": [
+          { val: "math", txt: "🧮 Toán Học" },
+          { val: "vietnamese", txt: "🇻🇳 Ngữ Văn" },
+          { val: "english", txt: "🇬🇧 Tiếng Anh" },
+          { val: "physics", txt: "💡 Vật Lý" },
+          { val: "chemistry", txt: "🧪 Hóa Học" },
+          { val: "biology", txt: "🌿 Sinh Học" },
+          { val: "history", txt: "📜 Lịch Sử" }
+      ]
+  };
+
+  function getGradeCategory(grade) {
+      const g = parseInt(grade);
+      if (g <= 3) return "primary_low";
+      if (g <= 5) return "primary_high";
+      if (g <= 7) return "junior_low";
+      if (g <= 9) return "junior_high";
+      return "senior";
+  }
+
+  function updateSubjectsDropdown() {
+      const grade = document.getElementById('grade').value;
+      const subjectSelect = document.getElementById('subject');
+      const currentSubject = subjectSelect.value;
+      
+      const category = getGradeCategory(grade);
+      const list = subjectsConfig[category];
+      
+      subjectSelect.innerHTML = list.map(item => `<option value="${item.val}">${item.txt}</option>`).join('');
+      
+      if (list.some(item => item.val === currentSubject)) {
+          subjectSelect.value = currentSubject;
+      } else {
+          subjectSelect.value = "math";
+      }
+      
+      loadTypes();
   }
 
   function loadGrades() {
@@ -1266,6 +1495,14 @@
               dataPool = englishData[currentTypeId] || [];
           } else if (subject === 'science') {
               dataPool = scienceData[currentTypeId] || [];
+          } else if (subject === 'physics') {
+              dataPool = physicsData[currentTypeId] || [];
+          } else if (subject === 'chemistry') {
+              dataPool = chemistryData[currentTypeId] || [];
+          } else if (subject === 'biology') {
+              dataPool = biologyData[currentTypeId] || [];
+          } else if (subject === 'history') {
+              dataPool = historyData[currentTypeId] || [];
           }
           
           if (dataPool.length > 0) {
@@ -1277,6 +1514,10 @@
                   document.getElementById('formatHint').innerText = "Gõ tiếng Việt có dấu đầy đủ.";
               } else if (subject === 'english') {
                   document.getElementById('formatHint').innerText = "Gõ bằng tiếng Anh.";
+              } else if (subject === 'physics' || subject === 'chemistry' || subject === 'biology') {
+                  document.getElementById('formatHint').innerText = "Gõ câu trả lời chính xác.";
+              } else if (subject === 'history') {
+                  document.getElementById('formatHint').innerText = "Gõ tiếng Việt có dấu đầy đủ.";
               } else {
                   document.getElementById('formatHint').innerText = "Gõ câu trả lời của con.";
               }
@@ -1431,7 +1672,7 @@
   }
 
   // Init
-  window.onload = () => { loadTypes(); startGlobalTimer(); };
+  window.onload = () => { updateSubjectsDropdown(); startGlobalTimer(); };
   document.getElementById('answer').addEventListener('keypress', e => { if(e.key==='Enter') check(); });
 
 </script>
