@@ -345,7 +345,7 @@
       <button onclick="closeAdminLogin()" class="text-[#8a8886] hover:text-[#323130] font-bold text-xl">✕</button>
     </div>
     <label class="block text-xs font-bold text-[#605e5c] mb-1">Mã PIN Admin:</label>
-    <input type="password" id="adminPinInput" placeholder="Mã PIN mặc định: admin123" class="w-full border border-[#a19f9d] rounded-lg px-3 py-2 text-center text-lg font-bold tracking-widest focus:outline-none focus:border-[#0078d4] mb-2">
+    <input type="password" id="adminPinInput" placeholder="Nhập mã PIN..." class="w-full border border-[#a19f9d] rounded-lg px-3 py-2 text-center text-lg font-bold tracking-widest focus:outline-none focus:border-[#0078d4] mb-2">
     <p id="adminLoginError" class="text-xs text-[#d83b01] font-semibold hidden mb-2">❌ PIN không chính xác!</p>
     <div class="flex gap-2">
       <button onclick="loginAdmin()" class="flex-1 bg-[#0078d4] text-white font-bold py-2 rounded-lg text-sm">Đăng nhập</button>
@@ -364,7 +364,7 @@
       </div>
       <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">✕</button>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
       <div class="md:col-span-2">
         <label class="block text-xs font-bold text-slate-500 mb-1">Google Sheets Web App URL:</label>
         <div class="flex gap-2">
@@ -380,6 +380,55 @@
         </div>
       </div>
     </div>
+    <details class="mb-3 bg-blue-50/60 border border-blue-200/60 rounded-xl p-2.5 text-xs text-slate-700">
+      <summary class="font-bold text-[#0078d4] cursor-pointer select-none">📋 Xem mã Apps Script hỗ trợ ghi trạng thái "Bỏ dở" lên Google Sheets</summary>
+      <div class="mt-2 text-[11px] leading-relaxed text-slate-600">
+        <p class="mb-1">Nếu muốn Google Sheet tự động ghi chữ <b>Bỏ dở</b> vào cột Trạng thái, copy mã sau vào <i>Extensions &gt; Apps Script</i> trên Google Sheets của bạn và Deploy lại:</p>
+        <pre class="bg-slate-900 text-slate-100 p-2.5 rounded-lg overflow-x-auto text-[10px] font-mono select-all">function doGet(e) {
+  var action = e.parameter.action;
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["Thời gian tạo", "Session ID", "Học sinh", "Môn", "Lớp", "Bắt đầu", "Kết thúc", "Thời lượng", "Điểm", "Tỉ lệ đúng", "Xếp loại", "Trạng thái"]);
+  }
+  if (action === "get_results") {
+    var rows = sheet.getDataRange().getValues();
+    var res = [];
+    for (var i = 1; i < rows.length; i++) {
+      res.push({
+        timestamp: rows[i][0], sessionId: rows[i][1], name: rows[i][2],
+        subject: rows[i][3], grade: rows[i][4], startTime: rows[i][5],
+        endTime: rows[i][6], duration: rows[i][7], score: rows[i][8],
+        ratio: rows[i][9], rating: rows[i][10], status: rows[i][11]
+      });
+    }
+    return ContentService.createTextOutput(JSON.stringify(res.reverse())).setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === "start") {
+    sheet.appendRow([new Date().toISOString(), e.parameter.sessionId, e.parameter.name, e.parameter.subject, e.parameter.grade, e.parameter.startTime, "", "", 0, "0/50", "", "Đang làm bài"]);
+    return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+  if (action === "complete" || action === "abandon") {
+    var range = sheet.getDataRange();
+    var values = range.getValues();
+    for (var i = 1; i < values.length; i++) {
+      if (values[i][1] === e.parameter.sessionId) {
+        var row = i + 1;
+        sheet.getRange(row, 7).setValue(e.parameter.endTime || "");
+        sheet.getRange(row, 8).setValue(e.parameter.duration || "--");
+        sheet.getRange(row, 9).setValue(e.parameter.score || 0);
+        sheet.getRange(row, 10).setValue(e.parameter.ratio || "0/50");
+        sheet.getRange(row, 11).setValue(e.parameter.rating || "Bỏ dở");
+        var st = e.parameter.status || (e.parameter.rating === "Bỏ dở" || action === "abandon" ? "Bỏ dở" : "Đã hoàn thành");
+        sheet.getRange(row, 12).setValue(st);
+        break;
+      }
+    }
+    return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput(JSON.stringify({error:"Invalid action"})).setMimeType(ContentService.MimeType.JSON);
+}</pre>
+      </div>
+    </details>
     <div class="flex gap-2 mb-4">
       <input type="text" id="adminSearch" oninput="filterAdmin()" placeholder="Tìm học sinh..." class="bg-slate-50 border-2 border-slate-200 focus:bg-white focus:border-[#0078d4] rounded-xl px-4 py-2 text-sm focus:outline-none w-60">
       <button onclick="syncAdmin()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-4 py-2 rounded-xl text-sm shadow flex items-center gap-1">🔄 Tải dữ liệu</button>
@@ -1260,6 +1309,24 @@ function resumeSession() {
 }
 
 function discardSession() {
+  const saved = localStorage.getItem(SESSION_KEY);
+  if (saved) {
+    try {
+      const sess = JSON.parse(saved);
+      if (sess.sessionId) {
+        sendToSheet({
+          action: "complete",
+          sessionId: sess.sessionId,
+          endTime: new Date().toLocaleString('vi-VN'),
+          duration: formatTime(sess.totalSecs || 0) || "--",
+          score: sess.score || 0,
+          ratio: `${sess.correctQ || 0}/50`,
+          rating: "Bỏ dở",
+          status: "Bỏ dở"
+        });
+      }
+    } catch(e){}
+  }
   localStorage.removeItem(SESSION_KEY);
   document.getElementById('resumeModal').classList.add('hidden');
   document.getElementById('resumeModal').classList.remove('flex');
@@ -1527,6 +1594,21 @@ function endSessionEarly() {
   if (!state.started) return;
   if (!confirm("Bạn có chắc muốn kết thúc và làm lại từ đầu?")) return;
   clearInterval(state.timerInterval);
+
+  // Send abandonment record to Google Sheet
+  if (state.sessionId) {
+    sendToSheet({
+      action: "complete",
+      sessionId: state.sessionId,
+      endTime: new Date().toLocaleString('vi-VN'),
+      duration: formatTime(state.totalSecs || 0) || "--",
+      score: state.score || 0,
+      ratio: `${state.correctQ || 0}/50`,
+      rating: "Bỏ dở",
+      status: "Bỏ dở"
+    });
+  }
+
   localStorage.removeItem(SESSION_KEY);
   state.started = false;
   lockControls(false);
@@ -1695,10 +1777,34 @@ function renderAdmin(data) {
   const sMap = {math:"Toán",vietnamese:"Tiếng Việt",english:"Tiếng Anh",science:"KHTN",physics:"Vật lý",chemistry:"Hóa học",biology:"Sinh học",history:"Lịch sử",geography:"Địa lý"};
   let html = '';
   data.forEach(r => {
-    const pill = r.status==='Đã hoàn thành'
-      ? '<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-black">✓ Xong</span>'
-      : '<span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full text-xs font-black animate-pulse">⚡ Đang thi</span>';
-    html += `<tr class="hover:bg-slate-50">
+    let pill = '';
+    const isCompleted = (r.status === 'Đã hoàn thành' && r.rating !== 'Bỏ dở');
+    const isExplicitAbandon = (r.rating === 'Bỏ dở' || r.status === 'Bỏ dở' || r.status === 'Đã hủy');
+    
+    // Check if session timed out (> 10 mins without completion and not currently running)
+    let isExpired = false;
+    if (!isCompleted && !isExplicitAbandon) {
+      if (state.started && r.sessionId === state.sessionId) {
+        isExpired = false;
+      } else if (r.timestamp) {
+        const t = new Date(r.timestamp).getTime();
+        if (!isNaN(t) && (Date.now() - t) > 10 * 60 * 1000) {
+          isExpired = true;
+        }
+      } else {
+        isExpired = true;
+      }
+    }
+
+    if (isExplicitAbandon || isExpired) {
+      pill = '<span class="bg-rose-100 text-rose-700 px-2.5 py-0.5 rounded-full text-xs font-black">❌ Bỏ dở</span>';
+    } else if (isCompleted) {
+      pill = '<span class="bg-green-100 text-green-700 px-2.5 py-0.5 rounded-full text-xs font-black">✓ Xong</span>';
+    } else {
+      pill = '<span class="bg-yellow-100 text-yellow-700 px-2.5 py-0.5 rounded-full text-xs font-black animate-pulse">⚡ Đang thi</span>';
+    }
+
+    html += `<tr class="hover:bg-slate-50 transition-colors">
       <td class="p-3 font-black text-slate-800">${r.name||''}</td>
       <td class="p-3 text-xs"><span class="bg-blue-50 text-blue-700 px-2 py-1 rounded font-bold">${sMap[r.subject]||r.subject||''} Lớp ${r.grade||''}</span></td>
       <td class="p-3 text-xs text-slate-500">${r.startTime||r.timestamp||''}</td>
